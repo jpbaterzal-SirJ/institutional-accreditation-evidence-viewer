@@ -62,7 +62,7 @@ function renderNavigation() {
     <section class="criteria-group">
       <h3>${escapeHtml(label)}</h3>
       ${items.map((criterion) => `
-        <button class="criterion-option${criterion.id === activeCriterion.id ? " is-selected" : ""}" type="button" data-criterion="${escapeHtml(criterion.id)}" aria-current="${criterion.id === activeCriterion.id ? "page" : "false"}">
+        <button class="criterion-option${criterion.id === activeCriterion.id ? " is-selected" : ""}" type="button" data-criterion="${escapeHtml(criterion.id)}" aria-pressed="${criterion.id === activeCriterion.id}">
           <span class="option-id">${escapeHtml(criterion.id)}</span><span class="option-text">${escapeHtml(criterion.text)}</span>
         </button>`).join("")}
     </section>`).join("");
@@ -239,6 +239,14 @@ function renderFolderButtons(folders) {
 }
 
 function renderApiFolderBrowser() {
+  if (window.location.protocol === "file:") {
+    return `
+      <div class="folder-state folder-state-warning" role="status">
+        <span class="folder-state-icon" aria-hidden="true">!</span>
+        <div><strong>Open this page through a web server</strong><p>Google Drive cannot authorize requests from a file:// page. Use a local web server and allow its HTTP referrer in the Drive API key settings.</p></div>
+      </div>`;
+  }
+
   const apiKey = getDriveApiKey();
   if (!apiKey || apiKey === "PASTE_RESTRICTED_API_KEY_HERE") {
     return `
@@ -364,6 +372,8 @@ async function fetchDriveFolder(folderId) {
 }
 
 async function loadDriveFolder(folderId) {
+  if (window.location.protocol === "file:") return;
+
   const requestId = ++folderRequestId;
   activeFolderContents = null;
   folderLoading = true;
@@ -517,7 +527,11 @@ function selectCriterion(criterion) {
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
-    filterButtons.forEach((filter) => filter.classList.toggle("is-active", filter === button));
+    filterButtons.forEach((filter) => {
+      const isActive = filter === button;
+      filter.classList.toggle("is-active", isActive);
+      filter.setAttribute("aria-pressed", String(isActive));
+    });
     const shown = filteredCriteria();
     if (shown.length && !shown.some((criterion) => criterion.id === activeCriterion.id)) {
       selectCriterion(shown[0]);
