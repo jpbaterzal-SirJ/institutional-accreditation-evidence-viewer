@@ -6,7 +6,7 @@ Responsive accreditation pages for Occidental Mindoro State University (OMSC) In
 
 - `index.html` — AACCUP accreditor welcome page and introduction to OMSU institutional quality assurance.
 - `evidence.html` — criterion-based Google Drive folder and PDF viewer.
-- `area.html` — dedicated accreditor pages for Areas I–IX; each page displays the area title and its named parameters from the supplied area references. Select an area in the sidebar to expand its parameter dropdown and open that parameter's read-only source folder. Area I displays the System – Inputs and Processes, Implementation, Outcome/s, and Best Practices sections for Parameters A–J.
+- `area.html` — dedicated accreditor pages for Areas I–IX; each page displays the area title and its named parameters from the supplied area references. Select an area in the sidebar to expand its parameter dropdown and open that parameter's read-only source folder. Area I displays collapsed, expandable System – Inputs and Processes, Implementation, and Outcome/s sections for Parameters A–J; criteria and Best Practices appear when a level is expanded.
 - `drive-structure.html` — read-only browser for the Institutional Accreditation 2026 Drive root and its nine area folders.
 
 The folder structure page embeds the shared Drive root, summarizes the scanned structure of Areas I–IX, and lets visitors browse an area's current folder contents without granting the website write access or requiring the Google Drive API key. Area labels/counts are a scan snapshot; the embedded Drive contents are the source of truth. File visibility remains controlled by Google Drive sharing permissions.

@@ -474,7 +474,6 @@ function renderAreaOneParameterCriteria(parameterKey, parameterName) {
     const section = document.createElement("article");
     section.className = "criteria-section";
     const details = document.createElement("details");
-    details.open = true;
     const summary = document.createElement("summary");
     const summaryText = document.createElement("span");
     summaryText.textContent = level.title;
@@ -497,23 +496,24 @@ function renderAreaOneParameterCriteria(parameterKey, parameterName) {
       criteriaList.append(item);
     });
     details.append(summary, criteriaList);
+    if (level.title === "Outcome/s") {
+      if (parameterCriteria.note) {
+        const note = document.createElement("p");
+        note.className = "criteria-transcription-note";
+        note.textContent = parameterCriteria.note;
+        details.append(note);
+      }
+
+      const bestPractices = document.createElement("section");
+      bestPractices.className = "best-practices parameter-best-practices";
+      const bestPracticesTitle = document.createElement("h3");
+      bestPracticesTitle.textContent = "Best Practices";
+      bestPractices.append(bestPracticesTitle);
+      details.append(bestPractices);
+    }
     section.append(details);
     areaOneParameterCriteriaPanel.append(section);
   });
-
-  if (parameterCriteria.note) {
-    const note = document.createElement("p");
-    note.className = "criteria-transcription-note";
-    note.textContent = parameterCriteria.note;
-    areaOneParameterCriteriaPanel.append(note);
-  }
-
-  const bestPractices = document.createElement("section");
-  bestPractices.className = "best-practices parameter-best-practices";
-  const bestPracticesTitle = document.createElement("h3");
-  bestPracticesTitle.textContent = "Best Practices";
-  bestPractices.append(bestPracticesTitle);
-  areaOneParameterCriteriaPanel.append(bestPractices);
 }
 
 function renderPage() {
