@@ -4,16 +4,16 @@ const accreditationAreas = {
     title: "Governance — Organizational Structure",
     summary: "10 parameter folders · A–J",
     parameters: [
-      ["A", "Parameter A", "1lwmbKIUMnqO0_8OiukGSXMvzhKjkFWdr"],
-      ["B", "Parameter B", "1ZJDCnoFlD0eFPZi8PQ8ojbOeGOlwkzpe"],
-      ["C", "Parameter C", "1FQtN9fggyVo6Vkebc4_hSeY83o-3LWqF"],
-      ["D", "Parameter D", "14P19rJ4sYfVherjNfDQBw2C4YMNE2czI"],
-      ["E", "Parameter E", "1K2uY3lgruV0puNBOOVv7fYCm01c2wgeB"],
-      ["F", "Parameter F", "1LkbTRDLdNV1QrU3c35KiH0MLA1zMtFCJ"],
-      ["G", "Parameter G", "1S9T3woEVWqN4O6Z0rJSlg8Ui_-pM-4Ii"],
-      ["H", "Parameter H", "1AKbV_2etwvUUL8awRGbanqmAqWi82wwj"],
-      ["I", "Parameter I", "1f3mi55UY77iYXQb2QyrXCSoe1aalle1D"],
-      ["J", "Parameter J", "1CAAA_2slG834ZzTxkJgQ1ShjQO8aLqeS"]
+      ["A", "A. Governance – Organizational Structure", "1lwmbKIUMnqO0_8OiukGSXMvzhKjkFWdr"],
+      ["B", "B. Probity", "1ZJDCnoFlD0eFPZi8PQ8ojbOeGOlwkzpe"],
+      ["C", "C. Governance – Strategic Vision", "1FQtN9fggyVo6Vkebc4_hSeY83o-3LWqF"],
+      ["D", "D. Governance – Accountability", "14P19rJ4sYfVherjNfDQBw2C4YMNE2czI"],
+      ["E", "E. Governance – Awareness and Management of Risk", "1K2uY3lgruV0puNBOOVv7fYCm01c2wgeB"],
+      ["F", "F. Governance – Effective Monitoring of Performance", "1LkbTRDLdNV1QrU3c35KiH0MLA1zMtFCJ"],
+      ["G", "G. Management and Financial Control", "1S9T3woEVWqN4O6Z0rJSlg8Ui_-pM-4Ii"],
+      ["H", "H. Enabling Feature – Use of Information and Communications Technology in Management", "1AKbV_2etwvUUL8awRGbanqmAqWi82wwj"],
+      ["I", "I. Resource Generation Strategies", "1f3mi55UY77iYXQb2QyrXCSoe1aalle1D"],
+      ["J", "J. Other Enabling Features", "1CAAA_2slG834ZzTxkJgQ1ShjQO8aLqeS"]
     ]
   },
   II: {
