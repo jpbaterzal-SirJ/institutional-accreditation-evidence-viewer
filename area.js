@@ -1,7 +1,7 @@
 const accreditationAreas = {
   I: {
     folderId: "1Q4fTNMI3tu2JvJQJ3cfw10tQVRXT-2aZ",
-    title: "Governance — Organizational Structure",
+    title: "Governance and Management",
     summary: "10 parameter folders · A–J",
     parameters: [
       ["A", "A. Governance – Organizational Structure", "1lwmbKIUMnqO0_8OiukGSXMvzhKjkFWdr"],
@@ -18,38 +18,38 @@ const accreditationAreas = {
   },
   II: {
     folderId: "12v9kUO6_o6Sw8FDgFTnAabFps00hze7S",
-    title: "Institutional accreditation",
+    title: "Teaching, Learning and Evaluation",
     summary: "5 parameter folders · A–E",
     parameters: [
-      ["A", "Parameter A", "117fNOcMO-QSe-TIMLb5jcz3NaiVmy7TM"],
-      ["B", "Parameter B", "1uHyx8sWW9pKLARXb-QcKwoaR3oj7_4Ab"],
-      ["C", "Parameter C", "1yLAblDM_YPJ7DH1oK7vHdiIO2mS7SbWo"],
-      ["D", "Parameter D", "1Z1t2pNpIqdGevGSO8Lk_eMt3j0UbLMw8"],
-      ["E", "Parameter E", "1rqe7oyyunRLM6XQduLzWtCsE87eqVLG1"]
+      ["A", "A. Setting and Achieving Program Standards", "117fNOcMO-QSe-TIMLb5jcz3NaiVmy7TM"],
+      ["B", "B. Program Approval", "1uHyx8sWW9pKLARXb-QcKwoaR3oj7_4Ab"],
+      ["C", "C. Program Monitoring and Review", "1yLAblDM_YPJ7DH1oK7vHdiIO2mS7SbWo"],
+      ["D", "D. Action to Strengthen Program", "1Z1t2pNpIqdGevGSO8Lk_eMt3j0UbLMw8"],
+      ["E", "E. ICT Resources", "1rqe7oyyunRLM6XQduLzWtCsE87eqVLG1"]
     ]
   },
   III: {
     folderId: "1AumTkd78k-vdbN7gZyq74aaav9Fd8uhY",
-    title: "Institutional accreditation",
+    title: "Faculty and Staff",
     summary: "4 parameter folders · A–D",
     parameters: [
-      ["A", "Parameter A", "137wSuvtT1srWgVCtGezZM6zw3DUPofIM"],
-      ["B", "Parameter B", "1auagLytwlvtaT-38UdAnW9lwJbun-mX7"],
-      ["C", "Parameter C", "1vlDAb370JanU8sKubfGivMcjyoJbyH3t"],
-      ["D", "Parameter D", "1nUButmMH-orf1nUUXrQA_0AE8Y-rj9i3"]
+      ["A", "A. Recruitment, Selection, and Compensation", "137wSuvtT1srWgVCtGezZM6zw3DUPofIM"],
+      ["B", "B. Qualifications and Competence", "1auagLytwlvtaT-38UdAnW9lwJbun-mX7"],
+      ["C", "C. Faculty Development", "1vlDAb370JanU8sKubfGivMcjyoJbyH3t"],
+      ["D", "D. Workload and Performance", "1nUButmMH-orf1nUUXrQA_0AE8Y-rj9i3"]
     ]
   },
   IV: {
     folderId: "1AWtXU3Yf9bLji9AiKwHzhMSGZWK4Gbiz",
-    title: "Research, Strategy and Capacity",
+    title: "Research",
     summary: "1 parameter folder · includes the 2026 checklist",
     parameters: [
-      ["A", "PARAMETER A: RESEARCH, STRATEGY AND CAPACITY", "17HfKg7M6OZV94W9Dm83dB9yKriLjFJyO"]
+      ["A", "A. Research Strategy and Capacity", "17HfKg7M6OZV94W9Dm83dB9yKriLjFJyO"]
     ]
   },
   V: {
     folderId: "12Vqv0kADr6TAN6V8NvA4_JJ2Ee0kFX4v",
-    title: "Extension and Networking",
+    title: "Extension, Consultancy and Linkages",
     summary: "2 parameter folders",
     parameters: [
       ["A", "A. Extension and Outreach", "17xfSGpgEjkBktS4xlYb8Y0Fs_11dK-C3"],
@@ -58,49 +58,49 @@ const accreditationAreas = {
   },
   VI: {
     folderId: "1VMmqFclTbpo5Hwkrw1bx7LcyWzz5LjvV",
-    title: "Student Support Services",
+    title: "Support to Students",
     summary: "4 parameter folders",
     parameters: [
-      ["A", "Parameter A: Recruitment, Admission and Academic Support", "1BtVaFUkUAm4K-7GZjDo_-8jjaAD0HoFk"],
-      ["B", "Parameter B: Student Scholarship", "1fLe-6bDzGstpdNvFfvkjeMoHwuRfM5CV"],
-      ["C", "Parameter C: Student Services", "1wUSzoscwIGLugoplq37GHZaqEnWktKg0"],
-      ["D", "Parameter D: Placement Support", "1eCFSXfK03EGKo5fN7kTOsWEnrDOYTPKK"]
+      ["A", "A. Recruitment, Admission and Academic Support", "1BtVaFUkUAm4K-7GZjDo_-8jjaAD0HoFk"],
+      ["B", "B. Student Scholarships", "1fLe-6bDzGstpdNvFfvkjeMoHwuRfM5CV"],
+      ["C", "C. Student Service", "1wUSzoscwIGLugoplq37GHZaqEnWktKg0"],
+      ["D", "D. Placement Support", "1eCFSXfK03EGKo5fN7kTOsWEnrDOYTPKK"]
     ]
   },
   VII: {
     folderId: "1mF7fArgGaHneiiuVax6pZZCAuwfmYSRc",
-    title: "Institutional accreditation",
+    title: "Support to Students",
     summary: "7 parameter folders · A–G",
     parameters: [
-      ["A", "Parameter A", "1wPFCHjRgt2OS3j4dCdDkNJh6oYTf10G4"],
-      ["B", "Parameter B", "1OvBIvVymHSNAfuX6kEjr2nswsOKiEuiZ"],
-      ["C", "Parameter C", "1NG4hx1hS4jDRoABz8AZbOKDI_8DGmSGW"],
-      ["D", "Parameter D", "1BiKY0H_bXhnO_xFQAgSq7JmZtnZT8tQS"],
-      ["E", "Parameter E", "1e7RRwuEgf4xCw8ZUFE2aV83iZStubYkh"],
-      ["F", "Parameter F", "1TPzeujbjrBncMpTziuVX7zo3pvHaS1Vg"],
-      ["G", "Parameter G", "18SToDyqlRDvACmQqqz-DD1yPqlXyHc9u"]
+      ["A", "A. Administration", "1wPFCHjRgt2OS3j4dCdDkNJh6oYTf10G4"],
+      ["B", "B. Personnel", "1OvBIvVymHSNAfuX6kEjr2nswsOKiEuiZ"],
+      ["C", "C. Collection Development, Organization and Preservation", "1NG4hx1hS4jDRoABz8AZbOKDI_8DGmSGW"],
+      ["D", "D. Services and Utilization", "1BiKY0H_bXhnO_xFQAgSq7JmZtnZT8tQS"],
+      ["E", "E. Physical Set-Up and Facilities", "1e7RRwuEgf4xCw8ZUFE2aV83iZStubYkh"],
+      ["F", "F. Financial Support", "1TPzeujbjrBncMpTziuVX7zo3pvHaS1Vg"],
+      ["G", "G. Linkages", "18SToDyqlRDvACmQqqz-DD1yPqlXyHc9u"]
     ]
   },
   VIII: {
     folderId: "12U_C0hyD_FPHMsmwEzfpQFPpo_ytsd7e",
-    title: "Institutional accreditation",
+    title: "Infrastructure and Other Learning Resources",
     summary: "4 parameter folders · A–D",
     parameters: [
-      ["A", "Parameter A", "1oP2xp2FOOX-o3EOtLs7eKtQYCs0J2wBN"],
-      ["B", "Parameter B", "1EFKt_no7yUGX_jb20xl24vjm0808myYO"],
-      ["C", "Parameter C", "1qUbRijfQmJsBBhiYMK7oHuFC65H33zi-"],
-      ["D", "Parameter D", "1aPEdndd-emd5-jwlEC1zJOu_TNIFY_Mq"]
+      ["A", "A. School Campus/Site", "1oP2xp2FOOX-o3EOtLs7eKtQYCs0J2wBN"],
+      ["B", "B. Infrastructure", "1EFKt_no7yUGX_jb20xl24vjm0808myYO"],
+      ["C", "C. Laboratories and Shops", "1qUbRijfQmJsBBhiYMK7oHuFC65H33zi-"],
+      ["D", "D. Non-Print, Digital and Electronic Resources", "1aPEdndd-emd5-jwlEC1zJOu_TNIFY_Mq"]
     ]
   },
   IX: {
     folderId: "1sgkLIleV4sRnqLi2c45wlFWHYmc6BP0R",
-    title: "Institutional accreditation",
+    title: "Quality Assurance Culture",
     summary: "4 parameter folders · A–D",
     parameters: [
-      ["A", "Parameter A", "1L92dLptveuxcuwYHk3Ae3fbxA03_iR1Y"],
-      ["B", "Parameter B", "1Xwfj7FtUdSw3MukGYJ7_8yr2bZezuMQr"],
-      ["C", "Parameter C", "1Q8cxeb_3zvC78uZO60b7aGnBI96jirmh"],
-      ["D", "Parameter D", "1yeL6pk92sjU6QWs1ILFioxNEcHL3Cm8B"]
+      ["A", "A. Planning", "1L92dLptveuxcuwYHk3Ae3fbxA03_iR1Y"],
+      ["B", "B. Structure of Quality Assurance", "1Xwfj7FtUdSw3MukGYJ7_8yr2bZezuMQr"],
+      ["C", "C. Monitoring and Evaluation of Quality Assurance", "1Q8cxeb_3zvC78uZO60b7aGnBI96jirmh"],
+      ["D", "D. Sustainability of Quality Assurance", "1yeL6pk92sjU6QWs1ILFioxNEcHL3Cm8B"]
     ]
   }
 };
