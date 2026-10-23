@@ -4,14 +4,14 @@ Responsive accreditation pages for Occidental Mindoro State University (OMSC) In
 
 ## Pages
 
-- `index.html` — Area I, Parameter A: Governance and Organizational Structure.
+- `index.html` — AACCUP accreditor welcome page and introduction to OMSU institutional quality assurance.
 - `evidence.html` — criterion-based Google Drive folder and PDF viewer.
-- `area.html` — accreditor workspace for Areas I–IX; choose an area from the header menu or area directory and browse its read-only source folder.
+- `area.html` — dedicated accreditor pages for Areas I–IX; Area I includes the verified Parameter A criteria, and every area links to its read-only source folder.
 - `drive-structure.html` — read-only browser for the Institutional Accreditation 2026 Drive root and its nine area folders.
 
 The folder structure page embeds the shared Drive root, summarizes the scanned structure of Areas I–IX, and lets visitors browse an area's current folder contents without granting the website write access or requiring the Google Drive API key. Area labels/counts are a scan snapshot; the embedded Drive contents are the source of truth. File visibility remains controlled by Google Drive sharing permissions.
 
-The home, evidence, area, and Drive structure pages use consistent navigation for browsing accreditation areas. Each area page displays the current shared Drive folder and scanned parameter count when known. Area names and parameter summaries are limited to information verified in the initial folder scan; the embedded Drive listing remains the source of truth. The evidence viewer supports search and section filters, including Best Practices.
+The home page welcomes AACCUP accreditors and introduces the university's quality assurance workspace. The header's Areas menu opens dedicated area pages. Each area page displays the verified parameter directory and current shared Drive folder; Area I also shows the published Parameter A criteria. Area names, criteria, and parameter summaries are limited to information verified in the initial folder scan and existing materials; the embedded Drive listing remains the source of truth. The evidence viewer supports search and section filters, including Best Practices.
 
 ## Google Drive evidence links
 

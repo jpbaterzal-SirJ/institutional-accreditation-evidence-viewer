@@ -623,8 +623,54 @@ button, input { font: inherit; }
   .area-source-help { margin: 7px 0 14px; color: var(--muted); font-size: 11px; line-height: 1.6; }
   .area-source-frame { min-height: 470px; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
   .area-source-frame iframe { width: 100%; height: 470px; display: block; border: 0; }
+  .area-parameter-section { margin-bottom: 27px; }
+  .area-parameter-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .area-parameter-card { min-width: 0; min-height: 48px; padding: 9px 11px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+  .area-parameter-card strong { color: #35445c; font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
+  .area-parameter-number { width: 27px; height: 27px; flex: 0 0 27px; display: grid; place-items: center; color: var(--blue); border-radius: 7px; background: #edf3fc; font-size: 9px; font-weight: 800; }
+  .area-parameter-file { background: #fbfcfe; }
+  .area-parameter-file .area-parameter-number { width: auto; padding: 0 5px; color: #8c6d1a; background: #fff4cf; }
+  .area-criteria-panel { margin-bottom: 28px; }
+  .area-criteria-panel[hidden] { display: none; }
+  .area-criteria-panel > .area-source-heading { margin-bottom: 12px; }
+  .area-criteria-panel .criteria-section { margin-bottom: 9px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .area-criteria-panel .criteria-section details > summary { min-height: 49px; font-size: 13px; }
+  .area-criteria-panel .criteria-list { padding-bottom: 13px; }
+  .area-criteria-panel .criteria-list li { padding: 3px 0; }
+  .area-criteria-panel .criteria-list a { display: block; padding: 8px 9px; border-radius: 5px; font-size: 11px; text-decoration: none; }
+  .area-criteria-panel .criteria-list a:hover { background: #f3f6fb; }
+  .area-criteria-panel .best-practices { margin-top: 11px; padding: 15px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 7px; background: #fbfcfe; }
+  .area-criteria-panel .best-practices h3 { font-size: 17px; }
+  .area-criteria-panel .best-practices p:last-child { font-size: 10px; }
+  .welcome-banner { width: 100%; overflow: hidden; background: #172b87; }
+  .welcome-banner img { width: 100%; height: auto; display: block; }
+  .welcome-banner h1 { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .welcome-introduction { width: min(1128px, calc(100% - 48px)); margin: 38px auto 44px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 38px; align-items: center; }
+  .welcome-introduction-copy { max-width: 740px; }
+  .welcome-introduction-copy .eyebrow { color: var(--blue); }
+  .welcome-introduction-copy h2 { max-width: 700px; margin: 0 0 14px; color: var(--deep-navy); font: 700 clamp(27px, 3.4vw, 39px)/1.12 "Barlow Condensed", sans-serif; }
+  .welcome-introduction-copy > p:not(.eyebrow) { max-width: 730px; margin: 0 0 12px; color: #53627a; font-size: 13px; line-height: 1.8; }
+  .welcome-introduction-copy .button { margin-top: 7px; }
+  .welcome-introduction-note { padding: 23px; border: 1px solid var(--line); border-radius: 11px; background: #fff; box-shadow: var(--shadow); }
+  .welcome-introduction-note .side-card-icon { margin-bottom: 15px; }
+  .welcome-introduction-note h3 { margin: 0 0 8px; color: var(--deep-navy); font: 700 24px/1.1 "Barlow Condensed", sans-serif; }
+  .welcome-introduction-note > p:not(.eyebrow) { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+  .home-area-directory { padding: 35px max(calc((100vw - 1128px)/2), 24px) 48px; background: #fff; border-top: 1px solid var(--line); }
+  .home-area-heading { max-width: 1128px; margin: 0 auto 19px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .home-area-heading .eyebrow { margin-bottom: 4px; color: var(--blue); }
+  .home-area-heading h2 { margin: 0; color: var(--deep-navy); font: 700 27px "Barlow Condensed", sans-serif; }
+  .home-area-heading p:not(.eyebrow) { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+  .home-area-grid { max-width: 1128px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .home-area-card { min-width: 0; min-height: 120px; padding: 15px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; text-decoration: none; transition: transform .15s, box-shadow .15s, border-color .15s; }
+  .home-area-card:hover { transform: translateY(-2px); border-color: #a9bddb; box-shadow: 0 8px 20px rgba(17,39,75,.08); }
+  .home-area-card > span:first-child { color: var(--blue); font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+  .home-area-card strong { color: var(--deep-navy); font-size: 12px; line-height: 1.4; }
+  .home-area-card > span:last-child { width: 100%; margin-top: auto; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 10px; }
+  .home-area-card b { color: var(--blue); font-size: 14px; }
 
   @media (max-width: 900px) {
+    .welcome-introduction { grid-template-columns: minmax(0, 1fr) 255px; gap: 24px; }
+    .home-area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .area-view-workspace { grid-template-columns: minmax(0, 1fr); }
     .area-sidebar { position: static; max-height: none; overflow: visible; }
     .area-navigation { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -633,6 +679,18 @@ button, input { font: inherit; }
   }
 
   @media (max-width: 700px) {
+    .welcome-banner { min-height: 265px; padding: 34px 22px; display: flex; align-items: center; background: linear-gradient(125deg, #071b3d, #123a91 75%, #1e4e9d); }
+    .welcome-banner img { display: none; }
+    .welcome-banner h1 { position: static; width: auto; height: auto; padding: 0; margin: 0; overflow: visible; clip: auto; white-space: normal; color: #fff; font: 800 clamp(39px, 11vw, 54px)/1.03 "Barlow Condensed", sans-serif; letter-spacing: -.02em; }
+    .welcome-introduction { width: calc(100% - 36px); margin: 28px auto 32px; grid-template-columns: 1fr; gap: 19px; }
+    .welcome-introduction-copy h2 { font-size: 30px; }
+    .welcome-introduction-copy > p:not(.eyebrow) { font-size: 12px; }
+    .welcome-introduction-note { padding: 19px; }
+    .home-area-directory { padding: 27px 18px 34px; }
+    .home-area-heading { align-items: flex-start; flex-direction: column; }
+    .home-area-heading h2 { font-size: 25px; }
+    .home-area-grid { grid-template-columns: 1fr; gap: 8px; }
+    .home-area-card { min-height: 104px; }
     .area-view-intro { min-height: 205px; }
     .area-view-intro .button { min-height: 40px; }
     .area-view-workspace { min-height: 0; }
@@ -644,4 +702,9 @@ button, input { font: inherit; }
     .area-source-heading .button { min-height: 40px; }
     .area-source-frame { min-height: 410px; }
     .area-source-frame iframe { height: 410px; }
+    .area-parameter-list { grid-template-columns: 1fr; gap: 6px; }
+    .area-parameter-card { min-height: 44px; }
+    .area-criteria-panel .area-source-heading { align-items: flex-start; flex-direction: column; }
+    .area-criteria-panel .criteria-section { padding-inline: 9px; }
+    .area-criteria-panel .criteria-list a { font-size: 10px; }
   }

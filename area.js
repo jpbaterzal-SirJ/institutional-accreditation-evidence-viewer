@@ -1,57 +1,64 @@
 const accreditationAreas = {
   I: {
     folderId: "1Q4fTNMI3tu2JvJQJ3cfw10tQVRXT-2aZ",
-    title: "Governance and organizational structure",
+    title: "Governance — Organizational Structure",
     summary: "10 parameter folders · A–J",
-    parameters: 10
+    parameters: Array.from("ABCDEFGHIJ", (letter) => `Parameter ${letter}`)
   },
   II: {
     folderId: "12v9kUO6_o6Sw8FDgFTnAabFps00hze7S",
-    title: "Accreditation evidence collection",
+    title: "Institutional accreditation",
     summary: "5 parameter folders · A–E",
-    parameters: 5
+    parameters: Array.from("ABCDE", (letter) => `Parameter ${letter}`)
   },
   III: {
     folderId: "1AumTkd78k-vdbN7gZyq74aaav9Fd8uhY",
-    title: "Accreditation evidence collection",
+    title: "Institutional accreditation",
     summary: "4 parameter folders · A–D, with 2 additional files",
-    parameters: 4
+    parameters: Array.from("ABCD", (letter) => `Parameter ${letter}`),
+    additionalItems: ["OMSU Faculty and Staff Infographic (1).png", "OMSU_Area_III_TEMPLATE (1).docx"]
   },
   IV: {
     folderId: "1AWtXU3Yf9bLji9AiKwHzhMSGZWK4Gbiz",
-    title: "Research, strategy and capacity",
+    title: "Research, Strategy and Capacity",
     summary: "Research, strategy and capacity · includes the 2026 checklist",
-    parameters: null
+    parameters: ["Parameter A: Research, Strategy and Capacity"],
+    additionalItems: ["Area IV IA Checklist 2026.pdf"]
   },
   V: {
     folderId: "12Vqv0kADr6TAN6V8NvA4_JJ2Ee0kFX4v",
-    title: "Extension and networking",
+    title: "Extension and Networking",
     summary: "Extension and outreach · networking and linkages",
-    parameters: null
+    parameters: ["A. Extension and Outreach", "B. Networking and Linkages"]
   },
   VI: {
     folderId: "1VMmqFclTbpo5Hwkrw1bx7LcyWzz5LjvV",
-    title: "Student support services",
+    title: "Student Support Services",
     summary: "4 parameter folders · recruitment, scholarship, student services and placement",
-    parameters: 4
+    parameters: [
+      "Parameter A: Recruitment, Admission and Academic Support",
+      "Parameter B: Student Scholarship",
+      "Parameter C: Student Services",
+      "Parameter D: Placement Support"
+    ]
   },
   VII: {
     folderId: "1mF7fArgGaHneiiuVax6pZZCAuwfmYSRc",
-    title: "Accreditation evidence collection",
+    title: "Institutional accreditation",
     summary: "7 parameter folders · A–G",
-    parameters: 7
+    parameters: Array.from("ABCDEFG", (letter) => `Parameter ${letter}`)
   },
   VIII: {
     folderId: "12U_C0hyD_FPHMsmwEzfpQFPpo_ytsd7e",
-    title: "Accreditation evidence collection",
+    title: "Institutional accreditation",
     summary: "4 parameter folders · A–D",
-    parameters: 4
+    parameters: Array.from("ABCD", (letter) => `Parameter ${letter}`)
   },
   IX: {
     folderId: "1sgkLIleV4sRnqLi2c45wlFWHYmc6BP0R",
-    title: "Accreditation evidence collection",
+    title: "Institutional accreditation",
     summary: "4 parameter folders · A–D",
-    parameters: 4
+    parameters: Array.from("ABCD", (letter) => `Parameter ${letter}`)
   }
 };
 
@@ -69,13 +76,39 @@ document.querySelector("#area-content-title").textContent = `Area ${selectedArea
 document.querySelector("#area-content-description").textContent = `${area.summary}. Browse the source folder and its current contents below.`;
 document.querySelector("#area-description").textContent = `${area.title}. Explore its verified parameter structure and supporting materials in the shared, read-only Google Drive folder.`;
 document.querySelector("#area-source-title").textContent = `Area ${selectedArea} evidence folder`;
-document.querySelector("#area-source-help").textContent = area.parameters
-  ? `The scanned folder contains ${area.parameters} parameter folders. Select the parameter you need in the Drive listing below.`
-  : "Browse the parameter folders and supporting materials in the shared Drive listing below.";
-document.querySelector("#area-parameter-count").textContent = area.parameters ?? "—";
-document.querySelector("#area-parameter-label").textContent = area.parameters
-  ? `${area.parameters === 1 ? "Parameter folder" : "Parameter folders"} · ${area.summary.split("·")[1]?.trim() || "see Drive listing"}`
-  : "Browse the current folder structure below";
+document.querySelector("#area-source-help").textContent = `Browse the verified parameter folders and supporting materials in the live Drive listing.`;
+document.querySelector("#area-parameter-count").textContent = area.parameters.length;
+document.querySelector("#area-parameter-label").textContent = `${area.parameters.length} verified parameter ${area.parameters.length === 1 ? "folder" : "folders"}`;
+document.querySelector("#area-parameter-summary").textContent = area.summary;
+
+const parameterList = document.querySelector("#area-parameter-list");
+area.parameters.forEach((parameter, index) => {
+  const item = document.createElement("article");
+  item.className = "area-parameter-card";
+  const number = document.createElement("span");
+  number.className = "area-parameter-number";
+  number.textContent = String(index + 1).padStart(2, "0");
+  const label = document.createElement("strong");
+  label.textContent = parameter;
+  item.append(number, label);
+  parameterList.append(item);
+});
+
+if (area.additionalItems?.length) {
+  area.additionalItems.forEach((name) => {
+    const item = document.createElement("article");
+    item.className = "area-parameter-card area-parameter-file";
+    const icon = document.createElement("span");
+    icon.className = "area-parameter-number";
+    icon.textContent = "FILE";
+    const label = document.createElement("strong");
+    label.textContent = name;
+    item.append(icon, label);
+    parameterList.append(item);
+  });
+}
+
+document.querySelector("#area-one-criteria").hidden = selectedArea !== "I";
 
 const folderFrame = document.querySelector("#area-folder-frame");
 folderFrame.src = `https://drive.google.com/embeddedfolderview?id=${encodeURIComponent(area.folderId)}#list`;
