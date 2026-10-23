@@ -598,23 +598,30 @@ button, input { font: inherit; }
   .area-sidebar .sidebar-heading { margin-bottom: 8px; }
   .area-sidebar .sidebar-heading h2 { font-size: 24px; }
   .area-label-small { min-width: 42px; height: 36px; font-size: 16px; }
-  .area-navigation { display: grid; gap: 5px; margin: 17px 0; }
-  .area-navigation a { min-height: 43px; padding: 8px 10px; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 9px; color: #34445d; border: 1px solid transparent; border-radius: 7px; font-size: 12px; text-decoration: none; transition: color .15s, background .15s, border-color .15s; }
-  .area-navigation a:hover { color: var(--blue); background: #f3f6fb; }
-  .area-navigation a[aria-current="page"] { color: var(--deep-navy); border-color: #dce6f5; background: #eef4ff; font-weight: 700; box-shadow: inset 3px 0 0 var(--blue); }
+  .area-navigation { display: grid; gap: 4px; margin: 17px 0; }
+  .area-navigation-item { min-width: 0; }
+  .area-navigation-trigger { width: 100%; min-height: 43px; padding: 8px 10px; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 9px; color: #34445d; border: 1px solid transparent; border-radius: 7px; background: transparent; font-size: 12px; text-align: left; cursor: pointer; transition: color .15s, background .15s, border-color .15s; }
+  .area-navigation-trigger:hover { color: var(--blue); background: #f3f6fb; }
+  .area-navigation-trigger[aria-current="page"] { color: var(--deep-navy); border-color: #dce6f5; background: #eef4ff; font-weight: 700; }
   .area-navigation-number { color: #8290a6; font-size: 10px; font-weight: 700; }
-  .area-navigation a[aria-current="page"] .area-navigation-number { color: var(--blue); }
-  .area-navigation-arrow { color: #8593a8; font-size: 19px; line-height: 1; }
+  .area-navigation-trigger[aria-current="page"] .area-navigation-number { color: var(--blue); }
+  .area-navigation-arrow { color: #8593a8; font-size: 15px; line-height: 1; transition: transform .15s; }
+  .area-navigation-trigger[aria-expanded="true"] .area-navigation-arrow { transform: rotate(180deg); }
+  .area-parameter-menu { margin: 3px 0 7px 20px; padding: 4px 0 4px 12px; border-left: 1px solid #dce4f0; }
+  .area-parameter-menu[hidden] { display: none; }
+  .area-parameter-link { min-height: 36px; padding: 7px 9px; display: block; color: #58677e; border-radius: 5px; font-size: 11px; line-height: 1.45; text-decoration: none; }
+  .area-parameter-link:hover { color: var(--blue); background: #f3f6fb; }
+  .area-parameter-link[aria-current="page"] { color: var(--deep-navy); background: #eef4ff; font-weight: 700; box-shadow: inset 2px 0 0 var(--blue); }
   .area-document-panel { min-width: 0; }
   .area-document-content { padding: clamp(22px, 3vw, 38px); }
   .area-document-content .selected-criterion h2 { margin: 0; color: var(--deep-navy); font: 700 27px/1.2 "Barlow Condensed", sans-serif; }
-  .area-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 30px; }
-  .area-metric-card { min-height: 82px; padding: 14px 16px; display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfe; }
-  .area-metric-icon { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border-radius: 10px; color: var(--navy); background: #edf3fc; font-size: 18px; }
-  .area-metric-check { color: #28734f; background: #e8f6ee; font-size: 17px; font-weight: 700; }
-  .area-metric-card div { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-  .area-metric-card strong { color: var(--deep-navy); font-size: 14px; }
-  .area-metric-card span:not(.area-metric-icon) { color: var(--muted); font-size: 10px; line-height: 1.45; }
+  .area-selection-banner { min-height: 64px; margin: -5px 0 24px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 8px; background: #fbfcfe; }
+  .area-selection-banner .area-metric-icon { width: 36px; height: 36px; flex: 0 0 36px; display: grid; place-items: center; border-radius: 9px; color: var(--navy); background: #edf3fc; font-size: 17px; }
+  .area-selection-banner > div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .area-selection-banner .eyebrow { margin: 0; font-size: 8px; }
+  .area-selection-banner strong { color: var(--deep-navy); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+  .area-readonly-badge { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; white-space: nowrap; }
+  .area-readonly-badge .status-dot { margin: 0; }
   .area-source-section { min-width: 0; padding-top: 22px; border-top: 1px solid var(--line); }
   .area-source-heading { margin-bottom: 7px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
   .area-source-heading .eyebrow { margin-bottom: 3px; }
@@ -623,13 +630,6 @@ button, input { font: inherit; }
   .area-source-help { margin: 7px 0 14px; color: var(--muted); font-size: 11px; line-height: 1.6; }
   .area-source-frame { min-height: 470px; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
   .area-source-frame iframe { width: 100%; height: 470px; display: block; border: 0; }
-  .area-parameter-section { margin-bottom: 27px; }
-  .area-parameter-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .area-parameter-card { min-width: 0; min-height: 48px; padding: 9px 11px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
-  .area-parameter-card strong { color: #35445c; font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
-  .area-parameter-number { width: 27px; height: 27px; flex: 0 0 27px; display: grid; place-items: center; color: var(--blue); border-radius: 7px; background: #edf3fc; font-size: 9px; font-weight: 800; }
-  .area-parameter-file { background: #fbfcfe; }
-  .area-parameter-file .area-parameter-number { width: auto; padding: 0 5px; color: #8c6d1a; background: #fff4cf; }
   .area-criteria-panel { margin-bottom: 28px; }
   .area-criteria-panel[hidden] { display: none; }
   .area-criteria-panel > .area-source-heading { margin-bottom: 12px; }
@@ -674,8 +674,8 @@ button, input { font: inherit; }
     .area-view-workspace { grid-template-columns: minmax(0, 1fr); }
     .area-sidebar { position: static; max-height: none; overflow: visible; }
     .area-navigation { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .area-navigation a { grid-template-columns: 24px minmax(0, 1fr); }
-    .area-navigation-arrow { display: none; }
+    .area-navigation-trigger { grid-template-columns: 24px minmax(0, 1fr) auto; }
+    .area-navigation-arrow { display: inline; }
   }
 
   @media (max-width: 700px) {
@@ -695,15 +695,15 @@ button, input { font: inherit; }
     .area-view-intro .button { min-height: 40px; }
     .area-view-workspace { min-height: 0; }
     .area-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
-    .area-navigation a { min-height: 42px; padding-inline: 8px; font-size: 11px; }
-    .area-metrics { grid-template-columns: 1fr; gap: 8px; margin-bottom: 22px; }
-    .area-metric-card { min-height: 72px; }
+    .area-navigation-trigger { min-height: 42px; padding-inline: 8px; font-size: 11px; }
+    .area-parameter-menu { margin-left: 10px; padding-left: 8px; }
+    .area-parameter-link { font-size: 10px; }
+    .area-selection-banner { align-items: flex-start; flex-wrap: wrap; }
+    .area-readonly-badge { margin-left: 48px; }
     .area-source-heading { align-items: flex-start; flex-direction: column; }
     .area-source-heading .button { min-height: 40px; }
     .area-source-frame { min-height: 410px; }
     .area-source-frame iframe { height: 410px; }
-    .area-parameter-list { grid-template-columns: 1fr; gap: 6px; }
-    .area-parameter-card { min-height: 44px; }
     .area-criteria-panel .area-source-heading { align-items: flex-start; flex-direction: column; }
     .area-criteria-panel .criteria-section { padding-inline: 9px; }
     .area-criteria-panel .criteria-list a { font-size: 10px; }

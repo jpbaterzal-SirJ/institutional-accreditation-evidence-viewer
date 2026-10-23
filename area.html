@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#092b70">
     <meta name="description" content="Browse OMSC institutional accreditation area folders and supporting documents.">
     <title>Accreditation Area | OMSC IQA</title>
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="stylesheet" href="styles.css?v=10">
   </head>
   <body class="viewer-page area-view-page">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -63,23 +63,13 @@
             <span class="area-label area-label-small" id="area-sidebar-label">I</span>
           </div>
           <p class="sidebar-subtitle">Choose an area to review its source folder.</p>
-          <nav class="area-navigation" aria-label="Accreditation areas">
-            <a href="area.html?area=I" data-area-link="I"><span class="area-navigation-number">01</span><span>Area I</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=II" data-area-link="II"><span class="area-navigation-number">02</span><span>Area II</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=III" data-area-link="III"><span class="area-navigation-number">03</span><span>Area III</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=IV" data-area-link="IV"><span class="area-navigation-number">04</span><span>Area IV</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=V" data-area-link="V"><span class="area-navigation-number">05</span><span>Area V</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=VI" data-area-link="VI"><span class="area-navigation-number">06</span><span>Area VI</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=VII" data-area-link="VII"><span class="area-navigation-number">07</span><span>Area VII</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=VIII" data-area-link="VIII"><span class="area-navigation-number">08</span><span>Area VIII</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-            <a href="area.html?area=IX" data-area-link="IX"><span class="area-navigation-number">09</span><span>Area IX</span><span class="area-navigation-arrow" aria-hidden="true">›</span></a>
-          </nav>
+          <nav id="area-navigation" class="area-navigation" aria-label="Accreditation areas"></nav>
           <div class="sidebar-foot"><span class="status-dot"></span><span>Source materials remain in Google Drive. This website is read-only.</span></div>
         </aside>
 
         <section class="document-panel area-document-panel">
           <div class="document-toolbar">
-            <div class="document-crumb"><span id="document-area-crumb">Area I</span><span aria-hidden="true">/</span><span>Supporting documents</span></div>
+            <div class="document-crumb"><span id="document-area-crumb">Area I</span><span aria-hidden="true">/</span><span id="document-parameter-crumb">Parameter A</span></div>
             <span class="document-label">READ-ONLY SOURCE</span>
           </div>
           <div class="document-content area-document-content">
@@ -88,24 +78,11 @@
               <h2 id="area-content-title">Area I · Governance and organizational structure</h2>
               <p id="area-content-description" class="selected-description">Browse the source folder and its parameter folders below.</p>
             </div>
-            <div class="area-metrics" aria-label="Area folder summary">
-              <article class="area-metric-card">
-                <span class="area-metric-icon" aria-hidden="true">▤</span>
-                <div><strong id="area-parameter-count">10</strong><span id="area-parameter-label">Parameter folders</span></div>
-              </article>
-              <article class="area-metric-card">
-                <span class="area-metric-icon area-metric-check" aria-hidden="true">✓</span>
-                <div><strong>Read only</strong><span>Original Drive files are unchanged</span></div>
-              </article>
+            <div class="area-selection-banner" aria-live="polite">
+              <span class="area-metric-icon" aria-hidden="true">▤</span>
+              <div><span class="eyebrow">Selected parameter</span><strong id="selected-parameter-name">Parameter A</strong></div>
+              <span class="area-readonly-badge"><span class="status-dot"></span>Read-only source</span>
             </div>
-            <section class="area-parameter-section" aria-labelledby="area-parameters-heading">
-              <div class="area-source-heading">
-                <div><p class="eyebrow">Verified folder structure</p><h2 id="area-parameters-heading">Area parameters</h2></div>
-                <span id="area-parameter-summary" class="file-count">10 parameters</span>
-              </div>
-              <div id="area-parameter-list" class="area-parameter-list"></div>
-              <p id="area-structure-note" class="area-source-help">The folder list is based on a read-only scan; the live Drive listing remains the source of truth.</p>
-            </section>
             <section id="area-one-criteria" class="area-criteria-panel" aria-labelledby="area-one-criteria-heading" hidden>
               <div class="area-source-heading">
                 <div><p class="eyebrow">Area I · Parameter A</p><h2 id="area-one-criteria-heading">Governance — Organizational Structure</h2></div>
