@@ -184,10 +184,6 @@ function renderFolderEvidence(evidence) {
 
   if (!files.length) return `
     <section class="folder-browser" aria-label="Google Drive folder contents">
-      <div class="folder-browser-heading">
-        <div><p class="eyebrow">Evidence files</p><h2>${escapeHtml(evidence.label)}</h2></div>
-        <span class="file-count">Read-only viewer</span>
-      </div>
       ${renderApiFolderBrowser()}
     </section>`;
 
@@ -436,7 +432,7 @@ function renderDocument() {
       <h1><span class="criterion-id">${escapeHtml(activeCriterion.id)}</span> ${escapeHtml(activeCriterion.id === "BP" ? "Best Practices" : "Accreditation Criterion")}</h1>
       <p class="selected-description">${escapeHtml(activeCriterion.text)}</p>
     </div>
-    ${folderItems.length ? renderFolderButtons(folderItems) : ""}
+    ${folderItems.length > 1 ? renderFolderButtons(folderItems) : ""}
     ${evidenceContent}`;
 
   documentContent.querySelectorAll("[data-evidence-index]").forEach((button) => {
