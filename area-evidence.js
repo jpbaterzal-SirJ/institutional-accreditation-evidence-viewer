@@ -206,8 +206,6 @@
     document.querySelector("#area-content-description").textContent = text
       ? `Supporting evidence for ${criterionId}.${criterionId === "O.2" && note ? ` ${note}` : ""}`
       : "Browse the source materials in this criterion folder.";
-    document.querySelector("#area-source-title").textContent = entry.name;
-    document.querySelector("#area-source-help").textContent = `Read-only Google Drive materials for Area ${selection.area}, Parameter ${selection.parameterKey}.`;
   }
 
   function selectEntry(entry, updateAddress) {
@@ -248,8 +246,6 @@
     rootLoading = true;
     document.querySelector("#area-content-title").textContent = "Select a criterion";
     document.querySelector("#area-content-description").textContent = "Expand a level in the sidebar to open its supporting materials.";
-    document.querySelector("#area-source-title").textContent = `${selection.parameterName} · Supporting documents`;
-    document.querySelector("#area-source-help").textContent = "Select a criterion to browse its read-only Drive folder and files.";
     renderNavigation();
     renderBrowser();
     try {
@@ -263,7 +259,16 @@
 
       const requestedCriterion = new URLSearchParams(window.location.search).get("criterion");
       const requestedEntry = entries.find((entry) => entry.id === requestedCriterion || entry.criterionId === requestedCriterion);
-      if (selection.viewMode !== "areas" && requestedEntry) selectEntry(requestedEntry, false);
+      if (selection.viewMode === "criteria") {
+        const defaultEntry = requestedEntry || entries.find((entry) => entry.isFolder && entry.group === "system" && entry.criterionId === "S.1");
+        if (defaultEntry) {
+          selectEntry(defaultEntry, false);
+        } else {
+          document.querySelector("#area-content-title").textContent = "System S.1 not found";
+          document.querySelector("#area-content-description").textContent = "No System S.1 folder is available in this parameter's Drive structure.";
+          renderBrowserState("System S.1 is unavailable", "No S.1 evidence folder was found for this parameter. Other criteria remain available in the sidebar.");
+        }
+      }
     } catch (error) {
       if (currentRequest !== requestId) return;
       rootLoading = false;
@@ -530,8 +535,6 @@
       const area = areas[event.detail.area];
       document.querySelector("#area-content-title").textContent = `Area ${event.detail.area} · ${area.title}`;
       document.querySelector("#area-content-description").textContent = `${area.summary}. Choose a parameter from the area list to review its source documents.`;
-      document.querySelector("#area-source-title").textContent = `${event.detail.parameterName} · Supporting documents`;
-      document.querySelector("#area-source-help").textContent = "Select a criterion to browse its read-only Drive folder and files.";
       renderNavigation();
       renderBrowser();
     }
@@ -547,11 +550,13 @@
         area: areaKey,
         parameterKey,
         parameterName: parameter[1],
-        parameterFolderId: parameter[2]
+        parameterFolderId: parameter[2],
+        viewMode: url.searchParams.get("view") === "areas" ? "areas" : "criteria"
       };
       const changed = !selection
         || selection.area !== nextSelection.area
-        || selection.parameterKey !== nextSelection.parameterKey;
+        || selection.parameterKey !== nextSelection.parameterKey
+        || selection.viewMode !== nextSelection.viewMode;
       syncSelection({
         ...nextSelection
       });
@@ -561,16 +566,20 @@
         if (entry && entry.id !== activeEntry?.id) {
           selectEntry(entry, false);
         } else if (!requestedCriterion && activeEntry) {
-          activeEntry = null;
-          activeGroup = "";
-          activeFolderPath = [];
-          activeFolderContents = null;
-          activeFile = null;
-          document.querySelector("#area-content-title").textContent = "Select a criterion";
-          document.querySelector("#area-content-description").textContent = "Expand a level in the sidebar to open its supporting materials.";
-          document.querySelector("#area-source-title").textContent = `${selection.parameterName} · Supporting documents`;
-          renderNavigation();
-          renderBrowser();
+          if (selection.viewMode === "criteria") {
+            const defaultEntry = entries.find((item) => item.isFolder && item.group === "system" && item.criterionId === "S.1");
+            if (defaultEntry && activeEntry.id !== defaultEntry.id) selectEntry(defaultEntry, false);
+          } else {
+            activeEntry = null;
+            activeGroup = "";
+            activeFolderPath = [];
+            activeFolderContents = null;
+            activeFile = null;
+            document.querySelector("#area-content-title").textContent = `Area ${selection.area} · ${area.title}`;
+            document.querySelector("#area-content-description").textContent = `${area.summary}. Choose a parameter from the area list to review its source documents.`;
+            renderNavigation();
+            renderBrowser();
+          }
         }
       }
     }

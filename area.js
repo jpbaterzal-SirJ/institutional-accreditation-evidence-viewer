@@ -405,12 +405,12 @@ let expandedArea = selectedArea;
 
 const areaNavigation = document.querySelector("#area-navigation");
 
-function updateAddress(replace = false) {
+function updateAddress(replace = false, preserveCriterion = false) {
   const url = new URL(window.location.href);
   url.searchParams.set("area", selectedArea);
   url.searchParams.set("parameter", selectedParameter[0]);
   url.searchParams.set("view", viewMode);
-  url.searchParams.delete("criterion");
+  if (!preserveCriterion) url.searchParams.delete("criterion");
   window.history[replace ? "replaceState" : "pushState"]({}, "", url);
 }
 
@@ -497,7 +497,6 @@ function renderAreaNavigation() {
 function renderPage() {
   const [parameterKey, parameterName, parameterFolderId] = selectedParameter;
   const areaFolderUrl = `https://drive.google.com/drive/folders/${encodeURIComponent(area.folderId)}`;
-  const parameterFolderUrl = `https://drive.google.com/drive/folders/${encodeURIComponent(parameterFolderId)}`;
 
   document.title = `Area ${selectedArea} | OMSC Institutional Accreditation`;
   document.querySelector("#area-title").textContent = `Area ${selectedArea}`;
@@ -508,12 +507,7 @@ function renderPage() {
   document.querySelector("#area-content-title").textContent = `Area ${selectedArea} · ${area.title}`;
   document.querySelector("#area-content-description").textContent = `${area.summary}. Choose a parameter from the area dropdown to review its source documents.`;
   document.querySelector("#area-description").textContent = `${area.title}. Select a parameter from the area list to browse its supporting materials.`;
-  document.querySelector("#selected-parameter-name").textContent = parameterName;
-  document.querySelector("#area-source-title").textContent = `${parameterName} · Supporting documents`;
-  document.querySelector("#area-source-help").textContent = `Showing the read-only Google Drive folder for Area ${selectedArea}, ${parameterName}.`;
   document.querySelector("#area-drive-link").href = areaFolderUrl;
-  document.querySelector("#area-source-open").href = parameterFolderUrl;
-  document.querySelector("#area-source-open").setAttribute("aria-label", `Open ${parameterName} in Google Drive`);
   renderSidebarView();
 
   document.querySelectorAll("[data-area-link]").forEach((link) => {
@@ -543,11 +537,15 @@ function loadLocation() {
     ? requestedView
     : url.searchParams.has("parameter") ? "criteria" : "areas";
   expandedArea = selectedArea;
+  const preserveCriterion = url.searchParams.has("criterion")
+    && viewMode === "criteria"
+    && url.searchParams.get("area")?.toUpperCase() === selectedArea
+    && url.searchParams.get("parameter")?.toUpperCase() === selectedParameter[0];
   if (
     url.searchParams.get("parameter") !== selectedParameter[0]
     || requestedView !== viewMode
     || (viewMode === "areas" && url.searchParams.has("criterion"))
-  ) updateAddress(true);
+  ) updateAddress(true, preserveCriterion);
   renderPage();
 }
 
