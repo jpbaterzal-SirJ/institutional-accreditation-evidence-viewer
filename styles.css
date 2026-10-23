@@ -38,9 +38,10 @@ button, input { font: inherit; }
 .areas-menu { height: 100%; position: relative; display: flex; align-items: center; }
 .areas-menu > summary { list-style: none; }
 .areas-menu > summary::-webkit-details-marker { display: none; }
-.areas-dropdown { position: absolute; top: calc(100% - 5px); right: 0; width: 245px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); padding: 8px; }
+.areas-dropdown { position: absolute; top: calc(100% - 5px); right: 0; width: 260px; max-height: min(75vh, 560px); overflow-y: auto; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); padding: 8px; }
 .areas-dropdown a { display: block; padding: 11px 12px; border-radius: 6px; font-size: 13px; text-decoration: none; }
 .areas-dropdown a:hover, .areas-dropdown a[aria-current="page"] { color: var(--blue); background: var(--pale); }
+.areas-dropdown hr { margin: 7px 8px; border: 0; border-top: 1px solid var(--line); }
 .nav-search { font-size: 23px !important; font-weight: 500; }
 .menu-toggle { display: none; }
 
