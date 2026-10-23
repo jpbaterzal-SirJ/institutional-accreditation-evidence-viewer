@@ -105,6 +105,260 @@ const accreditationAreas = {
   }
 };
 
+const areaOneParameterLevels = {
+  B: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "Guidelines and protocols are in place."],
+          ["S.2", "Major policies and decisions are available."],
+          ["S.3", "Members of the organization articulate/describe guidelines and practices, or state where they can be found."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The organization follows institutional processes with respect to governance because members of the Governing Body and Management were selected based on clear guidelines and procedures."],
+          ["I.2", "Administrators clearly articulate, follow, and implement the policies and guidelines set by the Governing Body."],
+          ["I.3", "The organization follows well-defined lines of communication in the transacting of business and in its daily operations."],
+          ["I.4", "Stakeholders receive timely information on policies, guidelines and major decisions of the Governing Board and/or Management."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "Stakeholders find Governing Body's decisions fair and transparent."],
+          ["O.2", "Management and other stakeholders are able to make sound decisions or take appropriate..."]
+        ]
+      }
+    ],
+    note: "The supplied image cuts off the remainder of O.2. Check the read-only source folder for its complete wording."
+  },
+  C: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "The management is guided by a well-defined institutional vision and mission, which are in consonance with regional, national, global trends, goals and objectives."],
+          ["S.2", "There is a strategic plan of the institution, which was approved and supported by governing body."],
+          ["S.3", "The strategic plan is consistent with the institutional vision/mission."],
+          ["S.4", "There are indicators for the goals/objectives of the strategic plan."],
+          ["S.5", "The plan articulates the means to reach the goals, including human, financial, and physical resources needed in the implementation."],
+          ["S.6", "Planning system is in place."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "Planning procedures are followed."],
+          ["I.2", "The implementation of the strategic plan is anchored on the institutional mission."],
+          ["I.3", "The institution implements the Strategic Plan and periodically evaluates it."],
+          ["I.4", "Stakeholders support the Strategic Plan because various sectors took part in putting it together."],
+          ["I.5", "Programs and projects geared towards achieving the institution's vision and mission are clearly planned, implemented, monitored, evaluated and continuously improved."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "The Development Plan is well-implemented."],
+          ["O.2", "There is a demonstrable information to indicate continual stability of, and confidence in, the institution's ability to pursue its mission."]
+        ]
+      }
+    ]
+  },
+  D: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "There are written policies and guidelines in the use of various funds."],
+          ["S.2", "There are systems for monitoring and evaluation to ensure compliance with laws and rules on government expenditures."],
+          ["S.3", "Stakeholders are aware of the laws and rules on Government Expenditures."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The HEI follows the processes set in the internal control system to ensure accountability."],
+          ["I.2", "Appropriate actions are done to address findings in internal/external audit reports performed by appropriate internal audit office, the COA and other external independent bodies."],
+          ["I.3", "Funds provided by agencies and individuals are used for the intended purposes, with the Governing Body ensuring the proper use and monitoring of results."],
+          ["I.4", "The Administration ensures that funds are allocated in accordance with the approved budget of expenditures, and under specified terms and conditions."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "Fund utilization is effective."],
+          ["O.2", "Accounting of funds is robust."],
+          ["O.3", "There is unqualified Annual Audit Report."],
+          ["O.4", "Disallowances are minimal."],
+          ["O.5", "Required reports are prepared and submitted on time."]
+        ]
+      }
+    ]
+  },
+  E: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "The unit heads are fully aware of the risks encountered in management."],
+          ["S.2", "A finance team studies, manages, and evaluates major financial investments."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The financial timeliness is regularly observed."],
+          ["I.2", "The Institution conducts Risk Assessment and Risk Response activities."],
+          ["I.3", "The Institution implements its financial strategy and spends its operating and budget through well-defined processes and administrative structures."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "The HEI is solvent, financially stable, and sustainable because of appropriate systems and structures that safeguard its assets."],
+          ["O.2", "The financial sustainability of the HEI results from the effective and efficient fiscal management of persons/teams clearly designated by the governing body."]
+        ]
+      }
+    ]
+  },
+  F: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "There is a scheme of periodic monitoring of fund utilization with planned activities."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The schedule of implementation of projects are duly followed together with the corresponding financial timelines."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "There is a culture of quality manifested by the regular monitoring of the performance of the HEI against its planned strategies and operational targets."],
+          ["O.2", "Programs are kept current and relevant because the governing body is involved in their approval, performance, and monitoring."],
+          ["O.3", "Institutional sustainability is promoted through:"],
+          ["O.3.1", "The strategic management of the institution's land, buildings, facilities and other resources;"],
+          ["O.3.2", "The institution's employment policies;"],
+          ["O.3.3", "Arrangements for consideration of student grievances, and student discipline; and"],
+          ["O.3.4", "Procedures to safeguard the health and safety of employees, students, and other individuals while they are in the institution's premises, or in other places where they may be affected by its operations."]
+        ]
+      }
+    ]
+  },
+  G: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "There is a sound system of management and financial control."],
+          ["S.2", "A mechanism for effective monitoring and control of income-generating projects is in place."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "Policies and systems of financial management and control are developed and implemented with the involvement of administrators, faculty, and, where appropriate, students."],
+          ["I.2", "Concerned officials, faculty, staff and students participate in budget preparation, allocation, management and control."],
+          ["I.3", "Resources are allocated to authorized expenditures to implement academic programs, research, extension and other projects as included in the institution's program of expenditures."],
+          ["I.4", "The institution is able to communicate with its key stakeholders."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "Operations are efficient, effective, and responsive to challenges and changes."],
+          ["O.2", "The budget of the institution is well-prepared, judiciously allocated, effectively utilized, clearly accounted and fairly audited."],
+          ["O.3", "Systems and processes reflect sound management, financial control, and quality assurance."],
+          ["O.4", "Stakeholders are satisfied with the governing body's and management's implementation of their commitments."]
+        ]
+      }
+    ]
+  },
+  H: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "The institution makes effective use of information and communications technology to manage its operations and academic affairs. (Separate from ICT for learning)"],
+          ["S.2", "There is a responsive link between ICT systems of administrative and academic offices to ensure optimal communication and use of information."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The use of ICT resources makes it easier and more efficient to manage operations, including accounting, HR, purchasing, etc."],
+          ["I.2", "The HEI uses the Management Information Systems (MIS) to enable it to be more efficient in the management of student and faculty records, as well as in planning for, and implementation of academic programs, budget, etc."],
+          ["I.3", "Staff, faculty, and administrators are proficient in ICT, with the HEI providing training and/or support."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "Technologically enhanced system of communication enhances management coordination and cooperation."],
+          ["O.2", "The institution projects the image of a modern technologically enabled academic institution."]
+        ]
+      }
+    ]
+  },
+  I: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "There are mechanisms for the institution to actively appraise potential sources of additional resources to support its development plans."],
+          ["S.2", "The institution has viable and sustainable income generating projects to support and augment the regular budget appropriated by the government."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The HEI implements its development plans, supported by viable, sustainable, and appropriate resource generation strategies."],
+          ["I.2", "The institution generates resources to supplement its tuition and other income."],
+          ["I.3", "The HEI avails itself of resources through its links with government and non-government agencies in the Philippines and overseas."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "The resource generation initiatives are sustainable, with the HEI taking a prudent attitude toward the management of risk."],
+          ["O.2", "Funds and other resources derived from specific projects produce the outcomes specified by the funder."],
+          ["O.3", "The monitoring and evaluation of resource generation activities enable the HEI to enhance further initiatives."],
+          ["O.4", "Adequate resources plowed into the institution to augment government subsidy."]
+        ]
+      }
+    ]
+  },
+  J: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "The HEI has other features that enable it to achieve its goals."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The enabling features are fully used to enhance efficiency and effectiveness of administration."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "A high-tech administrative machinery."]
+        ]
+      }
+    ]
+  }
+};
+
 const areaKeys = Object.keys(accreditationAreas);
 const query = new URLSearchParams(window.location.search);
 const requestedArea = query.get("area")?.toUpperCase();
@@ -116,6 +370,7 @@ let expandedArea = selectedArea;
 
 const areaNavigation = document.querySelector("#area-navigation");
 const folderFrame = document.querySelector("#area-folder-frame");
+const areaOneParameterCriteriaPanel = document.querySelector("#area-one-parameter-criteria");
 
 function updateAddress(replace = false) {
   const url = new URL(window.location.href);
@@ -195,6 +450,72 @@ function renderAreaNavigation() {
   });
 }
 
+function renderAreaOneParameterCriteria(parameterKey, parameterName) {
+  const parameterCriteria = areaOneParameterLevels[parameterKey];
+  const isVisible = selectedArea === "I" && Boolean(parameterCriteria);
+  areaOneParameterCriteriaPanel.hidden = !isVisible;
+  areaOneParameterCriteriaPanel.replaceChildren();
+  if (!isVisible) return;
+
+  const heading = document.createElement("div");
+  heading.className = "area-source-heading";
+  const headingCopy = document.createElement("div");
+  const eyebrow = document.createElement("p");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent = `Area I · Parameter ${parameterKey}`;
+  const title = document.createElement("h2");
+  title.id = "area-one-parameter-criteria-heading";
+  title.textContent = parameterName;
+  headingCopy.append(eyebrow, title);
+  heading.append(headingCopy);
+  areaOneParameterCriteriaPanel.append(heading);
+
+  parameterCriteria.levels.forEach((level) => {
+    const section = document.createElement("article");
+    section.className = "criteria-section";
+    const details = document.createElement("details");
+    details.open = true;
+    const summary = document.createElement("summary");
+    const summaryText = document.createElement("span");
+    summaryText.textContent = level.title;
+    const summaryIcon = document.createElement("span");
+    summaryIcon.className = "summary-icon";
+    summaryIcon.setAttribute("aria-hidden", "true");
+    summary.append(summaryText, summaryIcon);
+
+    const criteriaList = document.createElement("ul");
+    criteriaList.className = "criteria-list";
+    level.criteria.forEach(([criterionId, criterionText]) => {
+      const item = document.createElement("li");
+      const id = document.createElement("span");
+      id.className = "criterion-id";
+      id.textContent = `${criterionId} `;
+      const text = document.createElement("span");
+      text.className = "criterion-text";
+      text.textContent = criterionText;
+      item.append(id, text);
+      criteriaList.append(item);
+    });
+    details.append(summary, criteriaList);
+    section.append(details);
+    areaOneParameterCriteriaPanel.append(section);
+  });
+
+  if (parameterCriteria.note) {
+    const note = document.createElement("p");
+    note.className = "criteria-transcription-note";
+    note.textContent = parameterCriteria.note;
+    areaOneParameterCriteriaPanel.append(note);
+  }
+
+  const bestPractices = document.createElement("section");
+  bestPractices.className = "best-practices parameter-best-practices";
+  const bestPracticesTitle = document.createElement("h3");
+  bestPracticesTitle.textContent = "Best Practices";
+  bestPractices.append(bestPracticesTitle);
+  areaOneParameterCriteriaPanel.append(bestPractices);
+}
+
 function renderPage() {
   const [parameterKey, parameterName, parameterFolderId] = selectedParameter;
   const areaFolderUrl = `https://drive.google.com/drive/folders/${encodeURIComponent(area.folderId)}`;
@@ -213,6 +534,7 @@ function renderPage() {
   document.querySelector("#area-source-title").textContent = `${parameterName} · Supporting documents`;
   document.querySelector("#area-source-help").textContent = `Showing the read-only Google Drive folder for Area ${selectedArea}, ${parameterName}.`;
   document.querySelector("#area-one-criteria").hidden = !(selectedArea === "I" && parameterKey === "A");
+  renderAreaOneParameterCriteria(parameterKey, parameterName);
 
   folderFrame.src = `https://drive.google.com/embeddedfolderview?id=${encodeURIComponent(parameterFolderId)}#list`;
   folderFrame.title = `Area ${selectedArea}, ${parameterName} source folder in read-only Google Drive`;
