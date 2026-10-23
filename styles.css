@@ -201,6 +201,18 @@ button, input { font: inherit; }
 .pdf-preview-heading h2 { max-width: 600px; }
 .pdf-preview-heading .button { flex: 0 0 auto; }
 .folder-browser { min-width: 0; }
+.folder-picker { margin: -5px 0 21px; }
+.folder-picker-heading { margin-bottom: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
+.folder-picker-heading h2 { margin: 0; color: var(--deep-navy); font: 700 18px "Barlow Condensed", sans-serif; }
+.folder-picker-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: 10px; }
+.folder-button { min-width: 0; min-height: 68px; padding: 11px 13px; display: flex; align-items: center; gap: 12px; color: var(--ink); border: 1px solid #e0e6ef; border-radius: 7px; background: #fff; text-align: left; cursor: pointer; transition: border-color .16s, background .16s, box-shadow .16s, transform .16s; }
+.folder-button:hover { border-color: #a8bcdd; background: #f9fbff; transform: translateY(-1px); }
+.folder-button.is-selected { border-color: #9bb4dd; background: #f0f5ff; box-shadow: inset 3px 0 0 var(--blue); }
+.folder-button-icon { width: 37px; height: 37px; flex: 0 0 37px; display: grid; place-items: center; color: #8c6a08; border-radius: 8px; background: #fff2c5; font-size: 17px; }
+.folder-button-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.folder-button-copy strong { color: var(--deep-navy); font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+.folder-button-copy small { color: #77849a; font-size: 9px; }
+.folder-button-arrow { color: var(--blue); font-size: 17px; }
 .folder-browser-heading { margin-bottom: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
 .folder-browser-heading h2 { margin: 0; color: var(--deep-navy); font: 700 18px "Barlow Condensed", sans-serif; overflow-wrap: anywhere; }
 .folder-preview-frame { height: min(65vh, 720px); min-height: 420px; }

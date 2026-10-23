@@ -1,11 +1,11 @@
 // Add shared Google Drive folder and file URLs for each criterion.
 // Folder entries can include a breadcrumb path and multiple PDF file links.
 window.OMSC_EVIDENCE_LINKS = {
-  "S.1": {
+  "S.1": [{
     label: "1. Par.A_S.1",
     url: "https://drive.google.com/drive/folders/1NXB7WfRlM_JI3HNIwXliNDcI6oKSaFgA",
     path: [{ label: "1. Par.A_S.1" }]
-  }
+  }]
   // Example with direct PDF links if you want the site to list/preview files individually:
   // "S.1": [{
   //   label: "a. Approved Organizational Structure/Organizational Chart",

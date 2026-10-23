@@ -216,10 +216,31 @@ function renderFolderEvidence(evidence) {
     </section>`;
 }
 
+function renderFolderButtons(folders) {
+  return `
+    <section class="folder-picker" aria-label="Evidence folders">
+      <div class="folder-picker-heading">
+        <div><p class="eyebrow">Browse evidence</p><h2>Evidence folders</h2></div>
+        <span class="file-count">${folders.length} folder${folders.length === 1 ? "" : "s"}</span>
+      </div>
+      <div class="folder-picker-list">
+        ${folders.map(({ evidence, index }) => `
+          <button class="folder-button${index === activeEvidenceIndex ? " is-selected" : ""}" type="button" data-evidence-index="${index}" aria-pressed="${index === activeEvidenceIndex}">
+            <span class="folder-button-icon" aria-hidden="true">▰</span>
+            <span class="folder-button-copy"><strong>${escapeHtml(evidence.label)}</strong><small>${evidence.files.length ? `${evidence.files.length} linked PDF${evidence.files.length === 1 ? "" : "s"}` : "Browse folder contents"}</small></span>
+            <span class="folder-button-arrow" aria-hidden="true">→</span>
+          </button>`).join("")}
+      </div>
+    </section>`;
+}
+
 function renderDocument() {
   const configuredLink = driveLinks[activeCriterion.id];
   const invalidEvidenceCount = getInvalidEvidenceCount(configuredLink);
   const evidenceItems = getEvidenceItems(configuredLink);
+  const folderItems = evidenceItems
+    .map((item, index) => ({ evidence: item, index }))
+    .filter(({ evidence }) => evidence.isFolder);
   const hasConfiguration = Boolean(configuredLink);
   const evidence = evidenceItems[activeEvidenceIndex] || evidenceItems[0];
   if (evidence && activeFileIndex >= evidence.files.length) activeFileIndex = 0;
@@ -262,6 +283,7 @@ function renderDocument() {
       <h1><span class="criterion-id">${escapeHtml(activeCriterion.id)}</span> ${escapeHtml(activeCriterion.id === "BP" ? "Best Practices" : "Accreditation Criterion")}</h1>
       <p class="selected-description">${escapeHtml(activeCriterion.text)}</p>
     </div>
+    ${folderItems.length ? renderFolderButtons(folderItems) : ""}
     ${evidenceContent}`;
 
   documentContent.querySelectorAll("[data-evidence-index]").forEach((button) => {
