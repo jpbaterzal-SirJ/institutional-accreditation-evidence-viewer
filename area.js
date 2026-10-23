@@ -400,6 +400,7 @@ let selectedArea = Object.prototype.hasOwnProperty.call(accreditationAreas, requ
 let area = accreditationAreas[selectedArea];
 const requestedParameter = query.get("parameter")?.toUpperCase();
 let selectedParameter = area.parameters.find(([key]) => key === requestedParameter) || area.parameters[0];
+let viewMode = query.get("view") === "criteria" || (!query.has("view") && query.has("parameter")) ? "criteria" : "areas";
 let expandedArea = selectedArea;
 
 const areaNavigation = document.querySelector("#area-navigation");
@@ -408,8 +409,16 @@ function updateAddress(replace = false) {
   const url = new URL(window.location.href);
   url.searchParams.set("area", selectedArea);
   url.searchParams.set("parameter", selectedParameter[0]);
+  url.searchParams.set("view", viewMode);
   url.searchParams.delete("criterion");
   window.history[replace ? "replaceState" : "pushState"]({}, "", url);
+}
+
+function renderSidebarView() {
+  const isCriteriaView = viewMode === "criteria";
+  document.querySelector("#area-selection-panel").hidden = isCriteriaView;
+  document.querySelector("#area-criteria-navigation").hidden = !isCriteriaView;
+  document.querySelector("#area-sidebar-label").textContent = selectedArea;
 }
 
 function renderAreaNavigation() {
@@ -447,6 +456,7 @@ function renderAreaNavigation() {
       area = accreditationAreas[key];
       selectedParameter = area.parameters[0];
       expandedArea = key;
+      viewMode = "areas";
       updateAddress();
       renderPage();
     });
@@ -472,6 +482,7 @@ function renderAreaNavigation() {
         area = currentArea;
         selectedParameter = parameter;
         expandedArea = key;
+        viewMode = "criteria";
         updateAddress();
         renderPage();
       });
@@ -503,6 +514,7 @@ function renderPage() {
   document.querySelector("#area-drive-link").href = areaFolderUrl;
   document.querySelector("#area-source-open").href = parameterFolderUrl;
   document.querySelector("#area-source-open").setAttribute("aria-label", `Open ${parameterName} in Google Drive`);
+  renderSidebarView();
 
   document.querySelectorAll("[data-area-link]").forEach((link) => {
     if (link.dataset.areaLink === selectedArea) {
@@ -515,7 +527,7 @@ function renderPage() {
   });
 
   renderAreaNavigation();
-  window.OMSC_AREA_SELECTION = { area: selectedArea, parameterKey, parameterName, parameterFolderId };
+  window.OMSC_AREA_SELECTION = { area: selectedArea, parameterKey, parameterName, parameterFolderId, viewMode };
   window.dispatchEvent(new CustomEvent("area-selection-change", { detail: window.OMSC_AREA_SELECTION }));
 }
 
@@ -526,10 +538,24 @@ function loadLocation() {
   area = accreditationAreas[selectedArea];
   const parameterKey = url.searchParams.get("parameter")?.toUpperCase();
   selectedParameter = area.parameters.find(([key]) => key === parameterKey) || area.parameters[0];
+  const requestedView = url.searchParams.get("view");
+  viewMode = requestedView === "areas" || requestedView === "criteria"
+    ? requestedView
+    : url.searchParams.has("parameter") ? "criteria" : "areas";
   expandedArea = selectedArea;
-  if (url.searchParams.get("parameter") !== selectedParameter[0]) updateAddress(true);
+  if (
+    url.searchParams.get("parameter") !== selectedParameter[0]
+    || requestedView !== viewMode
+    || (viewMode === "areas" && url.searchParams.has("criterion"))
+  ) updateAddress(true);
   renderPage();
 }
+
+document.querySelector("#back-to-areas").addEventListener("click", () => {
+  viewMode = "areas";
+  updateAddress();
+  renderPage();
+});
 
 window.addEventListener("popstate", loadLocation);
 loadLocation();

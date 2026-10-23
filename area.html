@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#092b70">
     <meta name="description" content="Browse OMSC institutional accreditation area folders and supporting documents.">
     <title>Accreditation Area | OMSC IQA</title>
-    <link rel="stylesheet" href="styles.css?v=12">
+    <link rel="stylesheet" href="styles.css?v=13">
   </head>
   <body class="viewer-page area-view-page">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -58,18 +58,21 @@
 
       <section class="viewer-workspace area-view-workspace" aria-label="Accreditation area workspace">
         <aside class="evidence-sidebar area-sidebar">
-          <div class="sidebar-heading">
-            <div><p class="eyebrow">Accreditation directory</p><h2>Select an area</h2></div>
-            <span class="area-label area-label-small" id="area-sidebar-label">I</span>
+          <div id="area-selection-panel">
+            <div class="sidebar-heading">
+              <div><p class="eyebrow">Accreditation directory</p><h2>Select an area</h2></div>
+              <span class="area-label area-label-small" id="area-sidebar-label">I</span>
+            </div>
+            <p class="sidebar-subtitle">Choose an area to review its source folder.</p>
+            <nav id="area-navigation" class="area-navigation" aria-label="Accreditation areas"></nav>
+            <div id="area-sidebar-foot" class="sidebar-foot"><span class="status-dot"></span><span>Source materials remain in Google Drive. This website is read-only.</span></div>
           </div>
-          <p class="sidebar-subtitle">Choose an area to review its source folder.</p>
-          <nav id="area-navigation" class="area-navigation" aria-label="Accreditation areas"></nav>
-          <div class="area-criteria-navigation">
+          <div id="area-criteria-navigation" class="area-criteria-navigation" hidden>
+            <button id="back-to-areas" class="area-back-button" type="button"><span aria-hidden="true">←</span> Back to Areas</button>
             <p class="eyebrow">Parameter criteria</p>
             <p id="criterion-navigation-status" class="sidebar-subtitle" aria-live="polite">Select a parameter to load its criteria.</p>
             <nav id="criterion-navigation" class="criteria-navigation" aria-label="Parameter criteria"></nav>
           </div>
-          <div class="sidebar-foot"><span class="status-dot"></span><span>Source materials remain in Google Drive. This website is read-only.</span></div>
         </aside>
 
         <section class="document-panel area-document-panel">
@@ -104,7 +107,7 @@
     <footer class="viewer-footer"><a href="index.html">OMSC IQA</a><span>Institutional Accreditation · 2026</span></footer>
     <script src="app.js?v=5"></script>
     <script src="drive-config.js"></script>
-    <script src="area.js?v=7"></script>
-    <script src="area-evidence.js?v=1"></script>
+    <script src="area.js?v=8"></script>
+    <script src="area-evidence.js?v=3"></script>
   </body>
 </html>

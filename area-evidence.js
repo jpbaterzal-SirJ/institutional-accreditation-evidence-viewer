@@ -263,7 +263,7 @@
 
       const requestedCriterion = new URLSearchParams(window.location.search).get("criterion");
       const requestedEntry = entries.find((entry) => entry.id === requestedCriterion || entry.criterionId === requestedCriterion);
-      if (requestedEntry) selectEntry(requestedEntry, false);
+      if (selection.viewMode !== "areas" && requestedEntry) selectEntry(requestedEntry, false);
     } catch (error) {
       if (currentRequest !== requestId) return;
       rootLoading = false;
@@ -516,7 +516,26 @@
     if (changed) loadParameter();
   }
 
-  window.addEventListener("area-selection-change", (event) => syncSelection(event.detail));
+  window.addEventListener("area-selection-change", (event) => {
+    syncSelection(event.detail);
+    if (event.detail.viewMode === "areas" && activeEntry) {
+      requestId += 1;
+      activeEntry = null;
+      activeGroup = "";
+      activeFolderPath = [];
+      activeFolderContents = null;
+      activeFile = null;
+      folderLoading = false;
+      folderError = "";
+      const area = areas[event.detail.area];
+      document.querySelector("#area-content-title").textContent = `Area ${event.detail.area} · ${area.title}`;
+      document.querySelector("#area-content-description").textContent = `${area.summary}. Choose a parameter from the area list to review its source documents.`;
+      document.querySelector("#area-source-title").textContent = `${event.detail.parameterName} · Supporting documents`;
+      document.querySelector("#area-source-help").textContent = "Select a criterion to browse its read-only Drive folder and files.";
+      renderNavigation();
+      renderBrowser();
+    }
+  });
   window.addEventListener("popstate", () => {
     const url = new URL(window.location.href);
     const areaKey = url.searchParams.get("area") || "I";
