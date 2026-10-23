@@ -271,12 +271,13 @@ function renderApiFolderBrowser() {
   const selected = activePdf && listedFiles.some((file) => file.id === activePdf.id) ? activePdf : null;
 
   return `
-    <div class="drive-crumbs" aria-label="Folder location">
-      ${activeFolderPath.map((folder, index) => `
-        ${index ? '<span aria-hidden="true">›</span>' : ""}
-        <button class="drive-crumb${index === activeFolderPath.length - 1 ? " is-current" : ""}" type="button" data-folder-crumb="${index}" ${index === activeFolderPath.length - 1 ? 'aria-current="page"' : ""}>${escapeHtml(folder.name)}</button>
-      `).join("")}
-    </div>
+    ${activeFolderPath.length > 1 ? `
+      <div class="drive-crumbs" aria-label="Folder location">
+        ${activeFolderPath.map((folder, index) => `
+          ${index ? '<span aria-hidden="true">›</span>' : ""}
+          <button class="drive-crumb${index === activeFolderPath.length - 1 ? " is-current" : ""}" type="button" data-folder-crumb="${index}" ${index === activeFolderPath.length - 1 ? 'aria-current="page"' : ""}>${escapeHtml(folder.name)}</button>
+        `).join("")}
+      </div>` : ""}
     <div class="drive-list-heading">
       <div><p class="eyebrow">Folder contents</p><h3>${escapeHtml(activeFolderPath[activeFolderPath.length - 1]?.name || "Evidence files")}</h3></div>
       <span class="file-count">${folders.length} folder${folders.length === 1 ? "" : "s"} · ${listedFiles.length} file${listedFiles.length === 1 ? "" : "s"}</span>
