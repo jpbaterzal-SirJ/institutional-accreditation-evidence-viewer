@@ -19,6 +19,7 @@
   let criterionRootPathLength = 0;
   let activeFolderContents = null;
   let activeFile = null;
+  let activePreviewDialog = null;
   let rootLoading = false;
   let rootError = "";
   let folderLoading = false;
@@ -304,10 +305,6 @@
     }
   }
 
-  function getFileUrl(file) {
-    return `https://drive.google.com/file/d/${encodeURIComponent(file.id)}/view`;
-  }
-
   function getPreviewUrl(file) {
     const documentTypes = {
       "application/vnd.google-apps.document": "document",
@@ -369,10 +366,10 @@
     browser.append(nav);
   }
 
-  function renderPreview(file) {
-    const section = document.createElement("section");
-    section.className = "api-pdf-preview";
-    section.setAttribute("aria-label", "Selected file preview");
+  function renderPreview(file, trigger) {
+    const dialog = document.createElement("dialog");
+    dialog.className = "api-preview-dialog";
+    dialog.setAttribute("aria-label", `Preview ${file.name}`);
     const heading = document.createElement("div");
     heading.className = "api-preview-heading";
     const title = document.createElement("div");
@@ -382,26 +379,40 @@
     const name = document.createElement("h3");
     name.textContent = file.name;
     title.append(label, name);
-    const open = document.createElement("a");
-    open.className = "button button-primary";
-    open.href = getFileUrl(file);
-    open.target = "_blank";
-    open.rel = "noopener noreferrer";
-    open.textContent = "Open in Google Drive ↗";
-    heading.append(title, open);
+    const close = document.createElement("button");
+    close.className = "button button-primary api-preview-close";
+    close.type = "button";
+    close.textContent = "Close";
+    close.autofocus = true;
+    close.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+      }
+    });
+    heading.append(title, close);
     const frame = document.createElement("div");
     frame.className = "preview-frame api-preview-frame";
     const iframe = document.createElement("iframe");
     iframe.title = `Preview of ${file.name}`;
     iframe.src = getPreviewUrl(file);
-    iframe.loading = "lazy";
     iframe.setAttribute("allow", "autoplay");
     frame.append(iframe);
-    const note = document.createElement("p");
-    note.className = "preview-note";
-    note.textContent = "If this preview is unavailable, open the file in Google Drive. Visibility depends on the file's sharing settings.";
-    section.append(heading, frame, note);
-    browser.append(section);
+    dialog.append(heading, frame);
+    dialog.addEventListener("close", () => {
+      if (activeFile?.id === file.id) activeFile = null;
+      trigger.classList.remove("is-selected");
+      trigger.setAttribute("aria-pressed", "false");
+      dialog.remove();
+      if (activePreviewDialog === dialog) activePreviewDialog = null;
+    }, { once: true });
+    activeFile = file;
+    trigger.classList.add("is-selected");
+    trigger.setAttribute("aria-pressed", "true");
+    activePreviewDialog = dialog;
+    document.body.append(dialog);
+    dialog.showModal();
   }
 
   function renderBrowser() {
@@ -479,8 +490,7 @@
       } else {
         button.setAttribute("aria-pressed", String(activeFile?.id === item.id));
         button.addEventListener("click", () => {
-          activeFile = item;
-          renderBrowser();
+          renderPreview(item, button);
         });
       }
       const icon = document.createElement("span");
@@ -504,7 +514,6 @@
       list.append(button);
     });
     browser.append(list);
-    if (activeFile) renderPreview(activeFile);
     const note = document.createElement("p");
     note.className = "read-only-note";
     note.textContent = "Read-only access. This page lists folder contents and displays previews; it does not modify Drive files.";
@@ -521,6 +530,7 @@
   }
 
   window.addEventListener("area-selection-change", (event) => {
+    if (activePreviewDialog?.open) activePreviewDialog.close();
     syncSelection(event.detail);
     if (event.detail.viewMode === "areas" && activeEntry) {
       requestId += 1;
