@@ -106,6 +106,38 @@ const accreditationAreas = {
 };
 
 const areaOneParameterLevels = {
+  A: {
+    levels: [
+      {
+        title: "System – Inputs and Processes",
+        criteria: [
+          ["S.1", "The governance of the institution is clearly defined in the organizational structure."],
+          ["S.2", "The powers, functions/duties, and responsibilities of key officials are clearly delineated."],
+          ["S.3", "Administrative and academic councils/bodies exist to assist in decision-making as defined in the organizational structure."]
+        ]
+      },
+      {
+        title: "Implementation",
+        criteria: [
+          ["I.1", "The policy-making body demonstrates strong leadership and supports the institution's programs and operations."],
+          ["I.2", "The key officials follow the functional relationship structure in decision-making."],
+          ["I.3", "The organizational structure is used in defining the lines of communication and coordination."],
+          ["I.4", "The Administrative and Academic Councils function effectively."]
+        ]
+      },
+      {
+        title: "Outcome/s",
+        criteria: [
+          ["O.1", "Functions of various units and implementation of programs and projects are well-coordinated."],
+          ["O.2", "Conflict in administrative jurisdictions and official relationships are minimal."],
+          ["O.3", "Stakeholders feel satisfied in the management of the institution."],
+          ["O.4", "Stronger cooperation and coordination among individuals and units are observable."],
+          ["O.5", "The governing body demonstrates integrity and objectivity in all transactions in the pursuit of the mission of the institution."],
+          ["O.6", "Various stakeholders' expression of satisfaction with openness and transparency in the dissemination of the Governing Body's decisions."]
+        ]
+      }
+    ]
+  },
   B: {
     levels: [
       {
@@ -360,6 +392,8 @@ const areaOneParameterLevels = {
 };
 
 const areaKeys = Object.keys(accreditationAreas);
+window.OMSC_ACCREDITATION_AREAS = accreditationAreas;
+window.OMSC_AREA_ONE_CRITERIA = areaOneParameterLevels;
 const query = new URLSearchParams(window.location.search);
 const requestedArea = query.get("area")?.toUpperCase();
 let selectedArea = Object.prototype.hasOwnProperty.call(accreditationAreas, requestedArea) ? requestedArea : "I";
@@ -369,13 +403,12 @@ let selectedParameter = area.parameters.find(([key]) => key === requestedParamet
 let expandedArea = selectedArea;
 
 const areaNavigation = document.querySelector("#area-navigation");
-const folderFrame = document.querySelector("#area-folder-frame");
-const areaOneParameterCriteriaPanel = document.querySelector("#area-one-parameter-criteria");
 
 function updateAddress(replace = false) {
   const url = new URL(window.location.href);
   url.searchParams.set("area", selectedArea);
   url.searchParams.set("parameter", selectedParameter[0]);
+  url.searchParams.delete("criterion");
   window.history[replace ? "replaceState" : "pushState"]({}, "", url);
 }
 
@@ -450,72 +483,6 @@ function renderAreaNavigation() {
   });
 }
 
-function renderAreaOneParameterCriteria(parameterKey, parameterName) {
-  const parameterCriteria = areaOneParameterLevels[parameterKey];
-  const isVisible = selectedArea === "I" && Boolean(parameterCriteria);
-  areaOneParameterCriteriaPanel.hidden = !isVisible;
-  areaOneParameterCriteriaPanel.replaceChildren();
-  if (!isVisible) return;
-
-  const heading = document.createElement("div");
-  heading.className = "area-source-heading";
-  const headingCopy = document.createElement("div");
-  const eyebrow = document.createElement("p");
-  eyebrow.className = "eyebrow";
-  eyebrow.textContent = `Area I · Parameter ${parameterKey}`;
-  const title = document.createElement("h2");
-  title.id = "area-one-parameter-criteria-heading";
-  title.textContent = parameterName;
-  headingCopy.append(eyebrow, title);
-  heading.append(headingCopy);
-  areaOneParameterCriteriaPanel.append(heading);
-
-  parameterCriteria.levels.forEach((level) => {
-    const section = document.createElement("article");
-    section.className = "criteria-section";
-    const details = document.createElement("details");
-    const summary = document.createElement("summary");
-    const summaryText = document.createElement("span");
-    summaryText.textContent = level.title;
-    const summaryIcon = document.createElement("span");
-    summaryIcon.className = "summary-icon";
-    summaryIcon.setAttribute("aria-hidden", "true");
-    summary.append(summaryText, summaryIcon);
-
-    const criteriaList = document.createElement("ul");
-    criteriaList.className = "criteria-list";
-    level.criteria.forEach(([criterionId, criterionText]) => {
-      const item = document.createElement("li");
-      const id = document.createElement("span");
-      id.className = "criterion-id";
-      id.textContent = `${criterionId} `;
-      const text = document.createElement("span");
-      text.className = "criterion-text";
-      text.textContent = criterionText;
-      item.append(id, text);
-      criteriaList.append(item);
-    });
-    details.append(summary, criteriaList);
-    if (level.title === "Outcome/s") {
-      if (parameterCriteria.note) {
-        const note = document.createElement("p");
-        note.className = "criteria-transcription-note";
-        note.textContent = parameterCriteria.note;
-        details.append(note);
-      }
-
-      const bestPractices = document.createElement("section");
-      bestPractices.className = "best-practices parameter-best-practices";
-      const bestPracticesTitle = document.createElement("h3");
-      bestPracticesTitle.textContent = "Best Practices";
-      bestPractices.append(bestPracticesTitle);
-      details.append(bestPractices);
-    }
-    section.append(details);
-    areaOneParameterCriteriaPanel.append(section);
-  });
-}
-
 function renderPage() {
   const [parameterKey, parameterName, parameterFolderId] = selectedParameter;
   const areaFolderUrl = `https://drive.google.com/drive/folders/${encodeURIComponent(area.folderId)}`;
@@ -533,11 +500,6 @@ function renderPage() {
   document.querySelector("#selected-parameter-name").textContent = parameterName;
   document.querySelector("#area-source-title").textContent = `${parameterName} · Supporting documents`;
   document.querySelector("#area-source-help").textContent = `Showing the read-only Google Drive folder for Area ${selectedArea}, ${parameterName}.`;
-  document.querySelector("#area-one-criteria").hidden = !(selectedArea === "I" && parameterKey === "A");
-  renderAreaOneParameterCriteria(parameterKey, parameterName);
-
-  folderFrame.src = `https://drive.google.com/embeddedfolderview?id=${encodeURIComponent(parameterFolderId)}#list`;
-  folderFrame.title = `Area ${selectedArea}, ${parameterName} source folder in read-only Google Drive`;
   document.querySelector("#area-drive-link").href = areaFolderUrl;
   document.querySelector("#area-source-open").href = parameterFolderUrl;
   document.querySelector("#area-source-open").setAttribute("aria-label", `Open ${parameterName} in Google Drive`);
@@ -553,6 +515,8 @@ function renderPage() {
   });
 
   renderAreaNavigation();
+  window.OMSC_AREA_SELECTION = { area: selectedArea, parameterKey, parameterName, parameterFolderId };
+  window.dispatchEvent(new CustomEvent("area-selection-change", { detail: window.OMSC_AREA_SELECTION }));
 }
 
 function loadLocation() {
