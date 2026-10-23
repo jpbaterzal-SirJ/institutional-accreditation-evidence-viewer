@@ -6,11 +6,12 @@ Responsive accreditation pages for Occidental Mindoro State University (OMSC) In
 
 - `index.html` — Area I, Parameter A: Governance and Organizational Structure.
 - `evidence.html` — criterion-based Google Drive folder and PDF viewer.
+- `area.html` — accreditor workspace for Areas I–IX; choose an area from the header menu or area directory and browse its read-only source folder.
 - `drive-structure.html` — read-only browser for the Institutional Accreditation 2026 Drive root and its nine area folders.
 
 The folder structure page embeds the shared Drive root, summarizes the scanned structure of Areas I–IX, and lets visitors browse an area's current folder contents without granting the website write access or requiring the Google Drive API key. Area labels/counts are a scan snapshot; the embedded Drive contents are the source of truth. File visibility remains controlled by Google Drive sharing permissions.
 
-The home and evidence pages use consistent navigation for browsing the criteria, evidence viewer, and accreditation areas. The evidence viewer supports search and section filters, including Best Practices.
+The home, evidence, area, and Drive structure pages use consistent navigation for browsing accreditation areas. Each area page displays the current shared Drive folder and scanned parameter count when known. Area names and parameter summaries are limited to information verified in the initial folder scan; the embedded Drive listing remains the source of truth. The evidence viewer supports search and section filters, including Best Practices.
 
 ## Google Drive evidence links
 
