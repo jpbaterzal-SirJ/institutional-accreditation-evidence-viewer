@@ -24,11 +24,21 @@ let activeFilter = "all";
 let activeCriterion = criteria.find((item) => item.id === new URLSearchParams(window.location.search).get("criterion")) || criteria[0];
 let activeEvidenceIndex = 0;
 let activeFileIndex = 0;
+let activeFolderPath = [];
+let activeFolderContents = null;
+let activePdf = null;
+let folderLoading = false;
+let folderError = "";
+let folderRequestId = 0;
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[character]);
+}
+
+function getDriveApiKey() {
+  return window.OMSC_DRIVE_API_KEY || "";
 }
 
 function filteredCriteria() {
@@ -173,14 +183,12 @@ function renderFolderEvidence(evidence) {
     </nav>`;
 
   if (!files.length) return `
-    ${breadcrumbMarkup}
     <section class="folder-browser" aria-label="Google Drive folder contents">
       <div class="folder-browser-heading">
         <div><p class="eyebrow">Evidence files</p><h2>${escapeHtml(evidence.label)}</h2></div>
-        <span class="file-count">Folder preview</span>
+        <span class="file-count">Read-only viewer</span>
       </div>
-      <div class="preview-frame folder-preview-frame"><iframe title="Files in Google Drive folder ${escapeHtml(evidence.label)}" src="${escapeHtml(getPreviewUrl(evidence.url))}" allow="autoplay"></iframe></div>
-      <p class="preview-note">Browse the folder contents above to view its files. If Google Drive requests access, the folder must be shared with the accreditor's Google account or set to the appropriate link-viewing access.</p>
+      ${renderApiFolderBrowser()}
     </section>`;
 
   const selectedFile = files[activeFileIndex] || files[0];
@@ -232,6 +240,151 @@ function renderFolderButtons(folders) {
           </button>`).join("")}
       </div>
     </section>`;
+}
+
+function renderApiFolderBrowser() {
+  const apiKey = getDriveApiKey();
+  if (!apiKey || apiKey === "PASTE_RESTRICTED_API_KEY_HERE") {
+    return `
+      <div class="folder-state folder-state-warning" role="status">
+        <span class="folder-state-icon" aria-hidden="true">!</span>
+        <div><strong>Drive API key not configured</strong><p>Add your restricted API key to <code>drive-config.js</code>, then publish the updated file.</p></div>
+      </div>`;
+  }
+
+  if (folderLoading) {
+    return `<div class="folder-state" role="status"><span class="loading-spinner" aria-hidden="true"></span><div><strong>Loading folder contents</strong><p>Reading folders and files in read-only mode…</p></div></div>`;
+  }
+
+  if (folderError) {
+    return `
+      <div class="folder-state folder-state-error" role="alert">
+        <span class="folder-state-icon" aria-hidden="true">!</span>
+        <div><strong>Could not read this Drive folder</strong><p>${escapeHtml(folderError)}</p><button class="folder-retry" type="button" data-retry-folder>Try again</button></div>
+      </div>`;
+  }
+
+  if (!activeFolderContents) {
+    return `<div class="folder-state" role="status"><span class="loading-spinner" aria-hidden="true"></span><div><strong>Preparing evidence viewer</strong><p>Connecting to Google Drive in read-only mode…</p></div></div>`;
+  }
+
+  const folders = activeFolderContents.filter((item) => item.mimeType === "application/vnd.google-apps.folder");
+  const pdfs = activeFolderContents.filter((item) => item.mimeType === "application/pdf");
+  const otherFiles = activeFolderContents.filter((item) => item.mimeType !== "application/vnd.google-apps.folder" && item.mimeType !== "application/pdf");
+  const listedFiles = [...pdfs, ...otherFiles];
+  const selected = activePdf && listedFiles.some((file) => file.id === activePdf.id) ? activePdf : null;
+
+  return `
+    <div class="drive-crumbs" aria-label="Folder location">
+      ${activeFolderPath.map((folder, index) => `
+        ${index ? '<span aria-hidden="true">›</span>' : ""}
+        <button class="drive-crumb${index === activeFolderPath.length - 1 ? " is-current" : ""}" type="button" data-folder-crumb="${index}" ${index === activeFolderPath.length - 1 ? 'aria-current="page"' : ""}>${escapeHtml(folder.name)}</button>
+      `).join("")}
+    </div>
+    <div class="drive-list-heading">
+      <div><p class="eyebrow">Folder contents</p><h3>${escapeHtml(activeFolderPath[activeFolderPath.length - 1]?.name || "Evidence files")}</h3></div>
+      <span class="file-count">${folders.length} folder${folders.length === 1 ? "" : "s"} · ${listedFiles.length} file${listedFiles.length === 1 ? "" : "s"}</span>
+    </div>
+    ${folders.length || listedFiles.length ? `
+      <div class="drive-items" role="list">
+        ${folders.map((folder) => `
+          <button class="drive-item drive-folder-item" type="button" role="listitem" data-open-folder="${escapeHtml(folder.id)}" data-folder-name="${escapeHtml(folder.name)}">
+            <span class="drive-item-icon folder-icon" aria-hidden="true">▰</span>
+            <span class="drive-item-name">${escapeHtml(folder.name)}</span>
+            <span class="drive-item-meta">Folder</span>
+            <span class="drive-item-action" aria-hidden="true">›</span>
+          </button>`).join("")}
+        ${listedFiles.map((file) => {
+          const isPdf = file.mimeType === "application/pdf";
+          return `
+            <button class="drive-item drive-file-item${selected?.id === file.id ? " is-selected" : ""}" type="button" role="listitem" data-open-file="${escapeHtml(file.id)}" data-file-name="${escapeHtml(file.name)}" data-file-type="${escapeHtml(file.mimeType)}" aria-pressed="${selected?.id === file.id}">
+              <span class="drive-item-icon${isPdf ? " pdf-icon" : " other-file-icon"}" aria-hidden="true">${isPdf ? "PDF" : "FILE"}</span>
+              <span class="drive-item-name">${escapeHtml(file.name)}</span>
+              <span class="drive-item-meta">${file.modifiedTime ? escapeHtml(new Date(file.modifiedTime).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })) : ""}${file.size ? ` · ${escapeHtml(formatFileSize(file.size))}` : ""}</span>
+              <span class="drive-item-action">${isPdf ? "Preview" : "View"} <span aria-hidden="true">›</span></span>
+            </button>`;
+        }).join("")}
+      </div>
+    ` : `
+      <div class="folder-empty"><span aria-hidden="true">▤</span><strong>This folder is empty</strong><p>No viewable files or subfolders were returned by Google Drive.</p></div>
+    `}
+    ${selected ? `
+      <section class="api-pdf-preview" aria-label="Selected file preview">
+        <div class="api-preview-heading">
+          <div><p class="eyebrow">${selected.mimeType === "application/pdf" ? "PDF preview" : "File preview"}</p><h3>${escapeHtml(selected.name)}</h3></div>
+          <span class="read-only-badge"><span aria-hidden="true">✓</span> View only</span>
+        </div>
+        <div class="preview-frame api-preview-frame"><iframe title="Preview of ${escapeHtml(selected.name)}" src="${escapeHtml(getFilePreviewUrl(selected))}" allow="autoplay"></iframe></div>
+      </section>
+    ` : ""}
+    <p class="read-only-note"><span aria-hidden="true">ⓘ</span> Read-only access. This viewer only lists file details and displays previews; it does not modify Drive files.</p>`;
+}
+
+function formatFileSize(size) {
+  const bytes = Number(size);
+  if (!Number.isFinite(bytes) || bytes < 0) return "";
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function getFilePreviewUrl(file) {
+  const googleDocumentPaths = {
+    "application/vnd.google-apps.document": "document",
+    "application/vnd.google-apps.spreadsheet": "spreadsheets",
+    "application/vnd.google-apps.presentation": "presentation"
+  };
+  if (googleDocumentPaths[file.mimeType]) {
+    return `https://docs.google.com/${googleDocumentPaths[file.mimeType]}/d/${encodeURIComponent(file.id)}/preview`;
+  }
+  return `https://drive.google.com/file/d/${encodeURIComponent(file.id)}/preview`;
+}
+
+async function fetchDriveFolder(folderId) {
+  const files = [];
+  let pageToken = "";
+  do {
+    const parameters = new URLSearchParams({
+      q: `'${folderId.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}' in parents and trashed = false`,
+      fields: "nextPageToken,files(id,name,mimeType,modifiedTime,size)",
+      orderBy: "folder,name",
+      pageSize: "1000",
+      supportsAllDrives: "true",
+      includeItemsFromAllDrives: "true",
+      key: getDriveApiKey()
+    });
+    if (pageToken) parameters.set("pageToken", pageToken);
+    const response = await fetch(`https://www.googleapis.com/drive/v3/files?${parameters}`);
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const apiMessage = result.error?.message || `Google Drive API returned HTTP ${response.status}.`;
+      throw new Error(apiMessage);
+    }
+    files.push(...(Array.isArray(result.files) ? result.files : []));
+    pageToken = result.nextPageToken || "";
+  } while (pageToken);
+  return files;
+}
+
+async function loadDriveFolder(folderId) {
+  const requestId = ++folderRequestId;
+  activeFolderContents = null;
+  folderLoading = true;
+  folderError = "";
+  renderDocument();
+  try {
+    const files = await fetchDriveFolder(folderId);
+    if (requestId !== folderRequestId) return;
+    activeFolderContents = files;
+    folderLoading = false;
+    folderError = "";
+  } catch (error) {
+    if (requestId !== folderRequestId) return;
+    activeFolderContents = [];
+    folderLoading = false;
+    folderError = error instanceof Error ? error.message : "An unexpected error occurred while reading Google Drive.";
+  }
+  renderDocument();
 }
 
 function renderDocument() {
@@ -290,7 +443,16 @@ function renderDocument() {
     button.addEventListener("click", () => {
       activeEvidenceIndex = Number(button.dataset.evidenceIndex);
       activeFileIndex = 0;
+      activePdf = null;
+      folderError = "";
+      folderLoading = false;
+      activeFolderContents = null;
+      folderRequestId += 1;
+      const evidence = getEvidenceItems(driveLinks[activeCriterion.id])[activeEvidenceIndex];
+      const folderId = evidence?.isFolder ? getFolderId(evidence.url) : null;
+      activeFolderPath = folderId ? [{ id: folderId, name: evidence.label }] : [];
       renderDocument();
+      if (folderId && evidence && !evidence.files.length) loadDriveFolder(folderId);
     });
   });
   documentContent.querySelectorAll("[data-file-index]").forEach((button) => {
@@ -299,17 +461,60 @@ function renderDocument() {
       renderDocument();
     });
   });
+  documentContent.querySelectorAll("[data-open-folder]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const folderId = button.dataset.openFolder;
+      const name = button.dataset.folderName;
+      if (!folderId || !name) return;
+      activeFolderPath.push({ id: folderId, name });
+      activePdf = null;
+      loadDriveFolder(folderId);
+    });
+  });
+  documentContent.querySelectorAll("[data-folder-crumb]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.folderCrumb);
+      const folder = activeFolderPath[index];
+      if (!folder || index === activeFolderPath.length - 1) return;
+      activeFolderPath = activeFolderPath.slice(0, index + 1);
+      activePdf = null;
+      loadDriveFolder(folder.id);
+    });
+  });
+  documentContent.querySelectorAll("[data-open-file]").forEach((button) => {
+    button.addEventListener("click", () => {
+      activePdf = {
+        id: button.dataset.openFile,
+        name: button.dataset.fileName,
+        mimeType: button.dataset.fileType
+      };
+      renderDocument();
+    });
+  });
+  documentContent.querySelector("[data-retry-folder]")?.addEventListener("click", () => {
+    const folder = activeFolderPath[activeFolderPath.length - 1];
+    if (folder) loadDriveFolder(folder.id);
+  });
 }
 
 function selectCriterion(criterion) {
   activeCriterion = criterion;
   activeEvidenceIndex = 0;
   activeFileIndex = 0;
+  activePdf = null;
+  folderError = "";
+  folderLoading = false;
+  activeFolderContents = null;
+  folderRequestId += 1;
+  const evidence = getEvidenceItems(driveLinks[criterion.id])[0];
+  const rootFolderId = evidence?.isFolder ? getFolderId(evidence.url) : null;
+  activeFolderPath = rootFolderId ? [{ id: rootFolderId, name: evidence.label }] : [];
   const url = new URL(window.location.href);
   url.searchParams.set("criterion", criterion.id);
   window.history.replaceState({}, "", url);
   renderNavigation();
   renderDocument();
+  if (rootFolderId && evidence && !evidence.files.length) loadDriveFolder(rootFolderId);
 }
 
 filterButtons.forEach((button) => {
@@ -326,5 +531,9 @@ filterButtons.forEach((button) => {
 });
 
 searchInput.addEventListener("input", renderNavigation);
+const initialEvidence = getEvidenceItems(driveLinks[activeCriterion.id])[0];
+const initialFolderId = initialEvidence?.isFolder ? getFolderId(initialEvidence.url) : null;
+activeFolderPath = initialFolderId ? [{ id: initialFolderId, name: initialEvidence.label }] : [];
 renderNavigation();
 renderDocument();
+if (initialFolderId && initialEvidence && !initialEvidence.files.length) loadDriveFolder(initialFolderId);

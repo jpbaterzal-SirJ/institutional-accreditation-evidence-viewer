@@ -217,6 +217,50 @@ button, input { font: inherit; }
 .folder-browser-heading h2 { margin: 0; color: var(--deep-navy); font: 700 18px "Barlow Condensed", sans-serif; overflow-wrap: anywhere; }
 .folder-preview-frame { height: min(65vh, 720px); min-height: 420px; }
 .folder-preview-frame iframe { min-height: 420px; }
+.folder-state { min-height: 95px; padding: 18px; display: flex; align-items: center; gap: 13px; border: 1px solid #e1e7f0; border-radius: 7px; background: #f8faff; }
+.folder-state strong { color: var(--deep-navy); font-size: 12px; }
+.folder-state p { margin: 5px 0 0; color: #69768b; font-size: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+.folder-state code { padding: 2px 4px; color: var(--navy); background: #e9eef7; border-radius: 3px; }
+.folder-state-warning { border-color: #f0dfa6; background: #fffaf0; }
+.folder-state-error { border-color: #f0d0cb; background: #fff8f7; }
+.folder-state-icon { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; color: #93680a; border-radius: 50%; background: #fff0bf; font-size: 13px; font-weight: 700; }
+.folder-state-error .folder-state-icon { color: #a53b36; background: #fde4e0; }
+.loading-spinner { width: 23px; height: 23px; flex: 0 0 23px; border: 2px solid #dce5f4; border-top-color: var(--blue); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.folder-retry { margin-top: 9px; padding: 6px 10px; color: var(--blue); border: 1px solid #cbd8ed; border-radius: 4px; background: #fff; font-size: 10px; font-weight: 700; cursor: pointer; }
+.drive-crumbs { margin-bottom: 17px; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; color: #97a2b3; }
+.drive-crumb { max-width: min(280px, 50vw); padding: 3px 5px; overflow: hidden; color: var(--blue); border: 0; border-radius: 3px; background: transparent; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.drive-crumb:hover { background: #f0f4fb; }
+.drive-crumb.is-current { color: var(--deep-navy); font-weight: 700; cursor: default; }
+.drive-list-heading { margin-bottom: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.drive-list-heading .eyebrow { margin-bottom: 3px; }
+.drive-list-heading h3, .api-preview-heading h3 { margin: 0; color: var(--deep-navy); font: 700 18px "Barlow Condensed", sans-serif; overflow-wrap: anywhere; }
+.drive-items { overflow: hidden; border: 1px solid #dfe5ee; border-radius: 6px; background: #fff; }
+.drive-item { width: 100%; min-height: 52px; padding: 8px 12px; display: grid; grid-template-columns: 32px minmax(120px, 1fr) minmax(95px, auto) auto; align-items: center; gap: 10px; color: var(--ink); border: 0; background: #fff; text-align: left; cursor: pointer; }
+.drive-item + .drive-item { border-top: 1px solid #e7ebf1; }
+.drive-item:hover { background: #f8faff; }
+.drive-item.is-selected { background: #eef4ff; box-shadow: inset 3px 0 0 var(--blue); }
+.drive-item-icon { width: 27px; height: 31px; display: grid; place-items: center; border-radius: 4px; font-size: 7px; font-weight: 800; }
+.drive-item-icon.folder-icon { color: #8c6a08; background: #fff2c5; font-size: 15px; }
+.drive-item-icon.pdf-icon { color: #fff; background: #d74b4b; }
+.drive-item-icon.other-file-icon { color: #506a91; background: #eaf0f8; }
+.drive-item-name { min-width: 0; color: #293750; font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
+.drive-item-meta { color: #7c899d; font-size: 9px; text-align: right; }
+.drive-item-action { color: var(--blue); font-size: 10px; font-weight: 700; white-space: nowrap; }
+.drive-folder-item .drive-item-action { font-size: 17px; }
+.folder-empty { min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #748198; text-align: center; }
+.folder-empty > span { margin-bottom: 8px; color: #b18a26; font-size: 22px; }
+.folder-empty strong { color: var(--deep-navy); font-size: 12px; }
+.folder-empty p { margin: 5px 0 0; font-size: 10px; }
+.api-pdf-preview { margin-top: 22px; }
+.api-preview-heading { margin-bottom: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.api-preview-heading .eyebrow { margin-bottom: 3px; }
+.api-preview-heading h3 { max-width: 700px; }
+.read-only-badge { padding: 5px 9px; display: inline-flex; align-items: center; gap: 5px; color: #337956; border: 1px solid #d5eadf; border-radius: 20px; background: #f1faf5; font-size: 9px; font-weight: 700; white-space: nowrap; }
+.read-only-note { margin: 13px 0 0; display: flex; align-items: flex-start; gap: 7px; color: #77849a; font-size: 9px; line-height: 1.5; }
+.read-only-note > span { color: var(--blue); }
+.api-preview-frame { height: min(62vh, 690px); min-height: 380px; }
+.api-preview-frame iframe { min-height: 380px; }
 .drive-actions { padding-bottom: 13px; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
 .drive-status { display: flex; align-items: center; gap: 7px; color: #53657d; font-size: 10px; }
 .preview-frame { min-height: 390px; flex: 1; overflow: hidden; border: 1px solid #e0e6ef; border-radius: 5px; background: #f8f9fc; }
@@ -302,6 +346,12 @@ button, input { font: inherit; }
   .pdf-preview-frame, .pdf-preview-frame iframe { min-height: 360px; }
   .folder-browser-heading { align-items: flex-start; flex-direction: column; }
   .folder-preview-frame, .folder-preview-frame iframe { min-height: 360px; }
+  .drive-item { grid-template-columns: 29px minmax(0, 1fr) auto; gap: 8px; padding: 9px; }
+  .drive-item-meta { grid-column: 2; grid-row: 2; text-align: left; }
+  .drive-item-action { grid-column: 3; grid-row: 1 / span 2; }
+  .api-preview-heading { align-items: flex-start; flex-direction: column; }
+  .api-preview-frame, .api-preview-frame iframe { min-height: 360px; }
+  .folder-state { padding: 14px; align-items: flex-start; }
   .drive-actions { align-items: flex-start; flex-direction: column; }
   .preview-frame, .preview-frame iframe { min-height: 360px; }
   .empty-evidence { min-height: 320px; padding: 23px 15px; }

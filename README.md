@@ -9,18 +9,17 @@ Responsive accreditation pages for Occidental Mindoro State University (OMSC) In
 
 ## Google Drive evidence links
 
-Configure links in `evidence-links.js`. Folder URLs can be embedded in the evidence viewer. To show a curated PDF list with previews, add each PDF's shared Google Drive file URL under the folder's `files` array. For example:
+`evidence.js` uses the read-only Google Drive API to list folders and files inside each configured folder. Accreditors can open subfolders and preview PDFs in the page. Add the restricted API key to `drive-config.js` before publishing.
+
+The static website sends this API key from the visitor's browser, so it is visible to site visitors. Restrict it in Google Cloud Console to this website's HTTP referrer and to the Google Drive API only. Never use an unrestricted key or a service-account/private credential in the website.
+
+Make the evidence folder and its contents available as **Anyone with the link — Viewer** if accreditors should browse without Google sign-in. This permits anyone with the link to view those files. The API key does not grant access to private Drive content.
+
+Configure criterion root folders in `evidence-links.js`:
 
 ```js
 window.OMSC_EVIDENCE_LINKS = {
-  "S.1": [{
-    label: "a. Approved Organizational Structure/Organizational Chart",
-    url: "https://drive.google.com/drive/folders/FOLDER_ID",
-    path: [{ label: "1. Par.A_S.1" }],
-    files: [
-      { name: "Organizational Structure 2024.pdf", url: "https://drive.google.com/file/d/FILE_ID/view", size: "1.2 MB", modified: "Jun 18" }
-    ]
-  }]
+  "S.1": "https://drive.google.com/drive/folders/FOLDER_ID"
 };
 ```
 
