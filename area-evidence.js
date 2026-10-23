@@ -16,6 +16,7 @@
   let activeEntry = null;
   let activeGroup = "";
   let activeFolderPath = [];
+  let criterionRootPathLength = 0;
   let activeFolderContents = null;
   let activeFile = null;
   let rootLoading = false;
@@ -212,6 +213,7 @@
     activeEntry = entry;
     activeGroup = entry.group;
     activeFolderPath = entry.parent ? [entry.parent, { id: entry.id, name: entry.name }] : [];
+    criterionRootPathLength = activeFolderPath.length;
     activeFolderContents = null;
     activeFile = null;
     folderError = "";
@@ -223,7 +225,10 @@
     }
     setCriterionHeading(entry);
     if (entry.isFolder) {
-      if (!entry.parent) activeFolderPath = [{ id: entry.id, name: entry.name }];
+      if (!entry.parent) {
+        activeFolderPath = [{ id: entry.id, name: entry.name }];
+        criterionRootPathLength = activeFolderPath.length;
+      }
       loadFolder(entry.id);
     } else {
       activeFolderContents = [entry];
@@ -342,30 +347,24 @@
     const nav = document.createElement("nav");
     nav.className = "drive-crumbs";
     nav.setAttribute("aria-label", "Folder location");
-    activeFolderPath.forEach((folder, index) => {
-      if (index) {
+    const firstAncestorIndex = Math.max(criterionRootPathLength - 1, 0);
+    activeFolderPath.slice(firstAncestorIndex, -1).forEach((folder, relativeIndex) => {
+      const index = firstAncestorIndex + relativeIndex;
+      if (relativeIndex) {
         const separator = document.createElement("span");
         separator.setAttribute("aria-hidden", "true");
         separator.textContent = "›";
         nav.append(separator);
       }
-      if (index < activeFolderPath.length - 1) {
-        const button = document.createElement("button");
-        button.className = "drive-crumb";
-        button.type = "button";
-        button.textContent = folder.name;
-        button.addEventListener("click", () => {
-          activeFolderPath = activeFolderPath.slice(0, index + 1);
-          loadFolder(folder.id);
-        });
-        nav.append(button);
-      } else {
-        const current = document.createElement("span");
-        current.className = "drive-crumb is-current";
-        current.setAttribute("aria-current", "page");
-        current.textContent = folder.name;
-        nav.append(current);
-      }
+      const button = document.createElement("button");
+      button.className = "drive-crumb";
+      button.type = "button";
+      button.textContent = folder.name;
+      button.addEventListener("click", () => {
+        activeFolderPath = activeFolderPath.slice(0, index + 1);
+        loadFolder(folder.id);
+      });
+      nav.append(button);
     });
     browser.append(nav);
   }
@@ -441,7 +440,7 @@
       return;
     }
 
-    if (activeFolderPath.length) renderBreadcrumbs();
+    if (activeFolderPath.length > criterionRootPathLength) renderBreadcrumbs();
     const folders = activeFolderContents.filter((item) => item.isFolder);
     const files = activeFolderContents.filter((item) => !item.isFolder);
     const heading = document.createElement("div");
@@ -528,6 +527,7 @@
       activeEntry = null;
       activeGroup = "";
       activeFolderPath = [];
+      criterionRootPathLength = 0;
       activeFolderContents = null;
       activeFile = null;
       folderLoading = false;
@@ -573,6 +573,7 @@
             activeEntry = null;
             activeGroup = "";
             activeFolderPath = [];
+            criterionRootPathLength = 0;
             activeFolderContents = null;
             activeFile = null;
             document.querySelector("#area-content-title").textContent = `Area ${selection.area} · ${area.title}`;
